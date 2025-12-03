@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../screens/add_product_page.dart';
 
 class QuickActions extends StatelessWidget {
   const QuickActions({super.key});
@@ -39,7 +40,14 @@ class QuickActions extends StatelessWidget {
               child: SizedBox(
                 height: h * 0.065, // responsive height
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddProductScreen(),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 112, 165, 245),
                     shape: RoundedRectangleBorder(

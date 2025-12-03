@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:thristoparnterapp/models/notification_model.dart';
+import 'package:thristoparnterapp/providers/notifications/notification_controller.dart';
 import '../providers/dashboard_home_provider.dart';
 import '../widgets/partner_home_page/header.dart';
 import '../widgets/partner_home_page/quick_actions.dart';
@@ -39,6 +40,29 @@ class _PartnerHomePageState extends State<PartnerHomePage> {
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: Header(storeName: model?.storeName ?? "Wild Musafir Clothing"),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          final controller = Provider.of<NotificationController>(
+            context,
+            listen: false,
+          );
+
+          controller.addNotification(
+            NotificationModel(
+              id: DateTime.now().millisecondsSinceEpoch.toString(),
+              customerName: "Preview Customer",
+              orderId: "ORDER2025",
+              productName: "Zara Women Dress",
+              quantity: 2,
+              isNew: true,
+              status: "pending",
+              type: "order",
+              timestamp: DateTime.now(),
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
 
       body: RefreshIndicator(
         onRefresh: provider.loadDashboard,
@@ -51,7 +75,8 @@ class _PartnerHomePageState extends State<PartnerHomePage> {
             children: [
               const SizedBox(height: 10),
 
-              if (pendingShipments > 0) ShipmentAlert(pendingShipments: pendingShipments),
+              if (pendingShipments > 0)
+                ShipmentAlert(pendingShipments: pendingShipments),
               if (pendingShipments > 0) const SizedBox(height: 20),
 
               const QuickActions(),
@@ -67,7 +92,9 @@ class _PartnerHomePageState extends State<PartnerHomePage> {
               if (provider.isLoading)
                 Center(
                   child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(colorScheme.primary),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      colorScheme.primary,
+                    ),
                   ),
                 ),
 
@@ -76,7 +103,9 @@ class _PartnerHomePageState extends State<PartnerHomePage> {
                   padding: const EdgeInsets.only(top: 16),
                   child: Text(
                     provider.errorMessage!,
-                    style: textTheme.bodyLarge?.copyWith(color: colorScheme.error),
+                    style: textTheme.bodyLarge?.copyWith(
+                      color: colorScheme.error,
+                    ),
                   ),
                 ),
             ],
@@ -114,8 +143,14 @@ class _PartnerHomePageState extends State<PartnerHomePage> {
 
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: 'Analytics'),
-        BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.bar_chart),
+          label: 'Analytics',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person_outline),
+          label: 'Profile',
+        ),
       ],
     );
   }
@@ -123,8 +158,13 @@ class _PartnerHomePageState extends State<PartnerHomePage> {
   Widget _buildStoreSummary(DashboardProvider provider, ThemeData theme) {
     final model = provider.model;
     final textTheme = theme.textTheme;
-    final titleStyle = textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold) ??
-        TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: theme.colorScheme.onBackground);
+    final titleStyle =
+        textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold) ??
+        TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          color: theme.colorScheme.onBackground,
+        );
 
     final accentStyle = titleStyle.copyWith(color: theme.primaryColor);
 

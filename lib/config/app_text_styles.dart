@@ -18,4 +18,30 @@ class AppTextStyles {
     fontWeight: FontWeight.w600,
     color: AppColors.white,
   );
+
+  static const sectionTitle = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: AppColors.white,
+  );
+
+  static const body = TextStyle(
+    fontSize: 16,
+    color: AppColors.grey,
+  );
+
+  static const inputHint = TextStyle(
+    fontSize: 14,
+    color: AppColors.grey,
+  );
+  
+  static const label = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+  );
+
+  static const value = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.normal,
+  );
 }

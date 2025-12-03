@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../screens/partner_profile_page.dart';
 
 class Header extends StatelessWidget implements PreferredSizeWidget {
   final String storeName;
@@ -47,7 +48,14 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
 
               /// Profile button
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PartnerProfilePage(),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.person_outline, color: Colors.white),
               ),
             ],

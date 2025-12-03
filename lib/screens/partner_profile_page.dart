@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:thristoparnterapp/providers/profile_provider.dart';
 import 'package:provider/provider.dart';
-import '../../config/app_color.dart';
 import '../models/profile_page/theme_provider.dart';
 import 'package:thristoparnterapp/widgets/partner_profile_page/menu_card.dart';
 import 'package:thristoparnterapp/widgets/partner_profile_page/profile_header.dart';
+import 'order_details_page.dart';
 
 class PartnerProfilePage extends StatelessWidget {
   const PartnerProfilePage({super.key});
@@ -60,28 +60,34 @@ class PartnerProfilePage extends StatelessWidget {
                       title: "My Orders",
                       icon: Icons.shopping_cart,
                       showDot: true,
+                      navigateTo: const OrderDetailsPage(),
                     ),
                     MenuCard(
                       title: "Store Timings",
                       icon: Icons.access_time,
+                      // navigateTo: ,
                     ),
                     MenuCard(
                       title: "Store Document",
                       icon: Icons.insert_drive_file,
+                      // navigateTo: ,
                     ),
                     MenuCard(
                       title: "Store Bank Details",
                       icon: Icons.account_balance_wallet,
                       showDot: true,
+                      // navigateTo: ,
                     ),
                     MenuCard(
                       title: "My Payments",
                       icon: Icons.payments,
                       showDot: true,
+                      // navigateTo: ,
                     ),
                     MenuCard(
                       title: "Monthly Invoice",
                       icon: Icons.receipt_long,
+                      // navigateTo: ,
                     ),
                   ],
                 ),
