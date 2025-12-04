@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thristoparnterapp/screens/order_details_page.dart';
 import 'package:thristoparnterapp/screens/order_success_page.dart';
 import '../../config/app_color.dart';
 
@@ -79,11 +80,12 @@ class ActionButtons extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
+              Navigator.pop(context); // Close the dialog first
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const OrderSuccessPage(orderId: 
-                  '#Sp-2024-00123'),
+                  builder: (context) =>
+                      const OrderSuccessPage(orderId: "Sp-2024-00123"),
                 ),
               );
             },
@@ -115,7 +117,7 @@ class ActionButtons extends StatelessWidget {
             _showActionPopup(context, "confirm");
           },
           icon: const Icon(Icons.check, color: Colors.white),
-          label: const Text("Confirm", style: TextStyle(color: Colors.black)),
+          label: const Text("Confirm", style: TextStyle(color: Colors.white)),
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.confirmGreen,
             padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
@@ -131,7 +133,7 @@ class ActionButtons extends StatelessWidget {
         ElevatedButton.icon(
           onPressed: () => _showActionPopup(context, "decline"),
           icon: const Icon(Icons.close, color: Colors.white),
-          label: const Text("Decline", style: TextStyle(color: Colors.black)),
+          label: const Text("Decline", style: TextStyle(color: Colors.white)),
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.declineRed,
             padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),

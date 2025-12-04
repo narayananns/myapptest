@@ -1,5 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:thristoparnterapp/providers/profile_provider.dart';
+import 'package:thristoparnterapp/providers/notifications/notification_controller.dart';
 import '../../screens/partner_profile_page.dart';
+import '../../screens/notification_panel_screen.dart';
 
 class Header extends StatelessWidget implements PreferredSizeWidget {
   final String storeName;
@@ -8,9 +13,15 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final partnerProvider = Provider.of<PartnerProvider>(context);
+    final profileImage = partnerProvider.partner.profileImage;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return AppBar(
-      backgroundColor: const Color(0xFF1C1C1E),
-      elevation: 10,
+      backgroundColor: colorScheme.surface,
+      elevation: 0,
+      scrolledUnderElevation: 4,
       automaticallyImplyLeading: false,
       flexibleSpace: SafeArea(
         child: Padding(
@@ -22,9 +33,12 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
           ),
           child: Row(
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 18,
-                backgroundImage: AssetImage('assets/avatar_placeholder.png'),
+                backgroundImage: _getImageProvider(profileImage),
+                onBackgroundImageError: (_, __) {
+                  // Fallback handled by showing nothing or default background color
+                },
               ),
               const SizedBox(width: 12),
 
@@ -32,8 +46,8 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
               Expanded(
                 child: Text(
                   storeName,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: colorScheme.onSurface,
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
                   ),
@@ -41,9 +55,48 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
               ),
 
               /// Notification button
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.notifications, color: Colors.white),
+              Consumer<NotificationController>(
+                builder: (context, notifCtrl, child) {
+                  return Stack(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const NotificationPanelScreen(),
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.notifications,
+                          color: colorScheme.onSurface,
+                        ),
+                      ),
+                      if (notifCtrl.unreadCount > 0)
+                        Positioned(
+                          right: 8,
+                          top: 8,
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: const BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Text(
+                              '${notifCtrl.unreadCount}',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  );
+                },
               ),
 
               /// Profile button
@@ -56,13 +109,21 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   );
                 },
-                icon: const Icon(Icons.person_outline, color: Colors.white),
+                icon: Icon(Icons.person_outline, color: colorScheme.onSurface),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  ImageProvider _getImageProvider(String path) {
+    if (path.startsWith('assets/')) {
+      return AssetImage(path);
+    } else {
+      return FileImage(File(path));
+    }
   }
 
   @override

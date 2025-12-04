@@ -1,17 +1,11 @@
 // lib/models/add_product_model/product_stock_model.dart
 class ProductStock {
-  String itemName;
+  int quantity;
   String size;
 
-  ProductStock({
-    required this.itemName,
-    required this.size,
-  });
+  ProductStock({required this.quantity, required this.size});
 
   Map<String, dynamic> toJson() {
-    return {
-      "item_name": itemName,
-      "size": size,
-    };
+    return {"quantity": quantity, "size": size};
   }
 }

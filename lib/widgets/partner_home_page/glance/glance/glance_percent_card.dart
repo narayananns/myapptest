@@ -18,25 +18,44 @@ class GlancePercentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Expanded(
       child: Container(
         height: MediaQuery.of(context).size.height / 3,
         width: MediaQuery.of(context).size.width / 3,
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: const Color(0xFF2C2C2E),
+          color: theme.cardColor,
           borderRadius: BorderRadius.circular(12),
+          border: theme.brightness == Brightness.light
+              ? Border.all(color: Colors.black.withOpacity(0.1))
+              : null,
+          boxShadow: [
+            BoxShadow(
+              color: theme.shadowColor.withOpacity(0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(title, style: const TextStyle(color: Colors.white70 , fontSize: 16)),
+            Text(
+              title,
+              style: TextStyle(
+                color: colorScheme.onSurface.withOpacity(0.7),
+                fontSize: 16,
+              ),
+            ),
             const SizedBox(height: 8),
             Text(
               centerNumber,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: colorScheme.onSurface,
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
               ),
@@ -51,7 +70,13 @@ class GlancePercentCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Text(footerMain, style: const TextStyle(color: Colors.white54 , fontSize: 16)),
+            Text(
+              footerMain,
+              style: TextStyle(
+                color: colorScheme.onSurface.withOpacity(0.5),
+                fontSize: 16,
+              ),
+            ),
           ],
         ),
       ),

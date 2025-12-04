@@ -17,13 +17,22 @@ void openStockPopup(BuildContext context, AddProductController ctrl) {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text("Add Product Item + Size", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text(
+              "Add Product Item + Size",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 15),
 
-            CommonTextField(hint: "Product Item", controller: ctrl.stockItemCtrl),
+            CommonTextField(
+              hint: "Enter the number of items",
+              controller: ctrl.stockItemCtrl,
+            ),
             const SizedBox(height: 10),
 
-            CommonTextField(hint: "Product Size", controller: ctrl.stockSizeCtrl),
+            CommonTextField(
+              hint: 'Enter "S" or "32"',
+              controller: ctrl.stockSizeCtrl,
+            ),
             const SizedBox(height: 20),
 
             SizedBox(

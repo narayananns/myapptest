@@ -10,7 +10,7 @@ class StockChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Chip(
-      label: Text("${stock.itemName} - ${stock.size}"),
+      label: Text("Qty: ${stock.quantity} - Size: ${stock.size}"),
       deleteIcon: const Icon(Icons.close),
       onDeleted: onDelete,
     );

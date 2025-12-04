@@ -112,7 +112,7 @@ class RevenueChart extends StatelessWidget {
                 getTooltipColor: (_) => theme.cardColor,
                 tooltipPadding:
                     const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                tooltipRoundedRadius: 6,
+                tooltipBorderRadius: BorderRadius.circular(6),
                 getTooltipItems: (spots) => spots
                     .map((e) => LineTooltipItem(
                           e.y.toStringAsFixed(2),

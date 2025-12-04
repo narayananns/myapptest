@@ -77,9 +77,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               /// CONFIRM + DECLINE (Delivery choice passed)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18),
-                child: ActionButtons(
-                  deliveryType: deliveryChoice,
-                ),
+                child: ActionButtons(deliveryType: deliveryChoice),
               ),
 
               const SizedBox(height: 20),
@@ -113,20 +111,16 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
 
               const SizedBox(height: 12),
 
-              /// ORDER ITEMS GRID
+              /// ORDER ITEMS LIST
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18),
-                child: GridView.builder(
+                child: ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.zero,
                   itemCount: data.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 14,
-                    crossAxisSpacing: 14,
-                    childAspectRatio: 0.78,
-                  ),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 14),
                   itemBuilder: (context, index) {
                     return OrderItemCard(item: data[index]);
                   },

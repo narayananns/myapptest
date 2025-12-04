@@ -15,6 +15,8 @@ class ProductsLiveCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
     final h = MediaQuery.of(context).size.height;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     double cardHeight = h * 0.32; // fixed height responsive
     double radius = w * 0.12;
@@ -26,8 +28,18 @@ class ProductsLiveCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(w * 0.04),
         decoration: BoxDecoration(
-          color: const Color(0xFF2C2C2E),
+          color: theme.cardColor,
           borderRadius: BorderRadius.circular(12),
+          border: theme.brightness == Brightness.light
+              ? Border.all(color: Colors.black.withOpacity(0.1))
+              : null,
+          boxShadow: [
+            BoxShadow(
+              color: theme.shadowColor.withOpacity(0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -35,16 +47,24 @@ class ProductsLiveCard extends StatelessWidget {
           children: [
             Text(
               'Products Live',
-              style: TextStyle(color: Colors.white70, fontSize: w * 0.04),
+              style: TextStyle(
+                color: colorScheme.onSurface.withOpacity(0.7),
+                fontSize: w * 0.04,
+              ),
             ),
             Row(
               children: [
-                Text(
-                  count.toString(),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: w * 0.08,
-                    fontWeight: FontWeight.bold,
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      count.toString(),
+                      style: TextStyle(
+                        color: colorScheme.onSurface,
+                        fontSize: w * 0.08,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(width: w * 0.02),
@@ -57,13 +77,14 @@ class ProductsLiveCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: status.toLowerCase() == 'active'
                         ? Colors.green
-                        : Colors.red,
+                        : colorScheme.error,
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     status,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: Colors
+                          .white, // White text on Green/Red usually works better than black
                       fontWeight: FontWeight.bold,
                       fontSize: w * 0.035,
                     ),
@@ -76,12 +97,15 @@ class ProductsLiveCard extends StatelessWidget {
                 radius: radius,
                 lineWidth: lineWidth,
                 percent: percent,
-                backgroundColor: Colors.white10,
-                progressColor: Colors.lightBlueAccent,
+                backgroundColor: colorScheme.onSurface.withOpacity(0.1),
+                progressColor: colorScheme.primary,
                 circularStrokeCap: CircularStrokeCap.round,
                 center: Text(
                   status,
-                  style: TextStyle(color: Colors.white70, fontSize: w * 0.04),
+                  style: TextStyle(
+                    color: colorScheme.onSurface.withOpacity(0.7),
+                    fontSize: w * 0.04,
+                  ),
                 ),
               ),
             ),

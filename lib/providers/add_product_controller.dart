@@ -1,11 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../models/add_product_model/product_stock_model.dart';
+import '../../models/view_all_products_model.dart';
 
 class AddProductController extends ChangeNotifier {
   // ===================================================================
   // PRODUCT PHOTOS
   // ===================================================================
   List<String> productPhotos = [];
+  final ImagePicker _picker = ImagePicker();
+
+  void setData(ProductModel product) {
+    nameCtrl.text = product.name;
+    idCtrl.text = product.id;
+    productPhotos = List.from(product.images);
+    sellingPriceCtrl.text = product.sellingPrice.toString();
+    priceBeforeCtrl.text = product.mrp.toString();
+    descriptionCtrl.text = product.description;
+
+    // Best effort mapping for single values to lists
+    stockList.clear();
+    if (product.stockList.isNotEmpty) {
+      stockList.addAll(product.stockList);
+    }
+    _updateTotalQuantity();
+
+    colors.clear();
+    if (product.colors.isNotEmpty) {
+      colors.addAll(product.colors);
+    }
+
+    notifyListeners();
+  }
+
+  Future<void> pickImages() async {
+    try {
+      final List<XFile> images = await _picker.pickMultiImage();
+      if (images.isNotEmpty) {
+        productPhotos.addAll(images.map((e) => e.path));
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint("Error picking images: $e");
+    }
+  }
 
   void addPhoto(String path) {
     productPhotos.add(path);
@@ -82,24 +120,26 @@ class AddProductController extends ChangeNotifier {
   void addStockItem() {
     if (stockItemCtrl.text.isEmpty || stockSizeCtrl.text.isEmpty) return;
 
-    stockList.add(
-      ProductStock(
-        itemName: stockItemCtrl.text.trim(),
-        size: stockSizeCtrl.text.trim(),
-      ),
-    );
+    int qty = int.tryParse(stockItemCtrl.text.trim()) ?? 0;
+
+    stockList.add(ProductStock(quantity: qty, size: stockSizeCtrl.text.trim()));
 
     stockItemCtrl.clear();
     stockSizeCtrl.clear();
 
-    quantityCtrl.text = stockList.length.toString();
+    _updateTotalQuantity();
     notifyListeners();
   }
 
   void removeStockItem(int index) {
     stockList.removeAt(index);
-    quantityCtrl.text = stockList.length.toString();
+    _updateTotalQuantity();
     notifyListeners();
+  }
+
+  void _updateTotalQuantity() {
+    int total = stockList.fold(0, (sum, item) => sum + item.quantity);
+    quantityCtrl.text = total.toString();
   }
 
   // ===================================================================
@@ -124,7 +164,24 @@ class AddProductController extends ChangeNotifier {
   // ===================================================================
   // SIZE GUIDE
   // ===================================================================
-  TextEditingController sizeGuideCtrl = TextEditingController();
+  XFile? sizeGuideImage;
+
+  Future<void> pickSizeGuideImage() async {
+    try {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        sizeGuideImage = image;
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint("Error picking size guide image: $e");
+    }
+  }
+
+  void removeSizeGuideImage() {
+    sizeGuideImage = null;
+    notifyListeners();
+  }
 
   // ===================================================================
   // TOP SELLING

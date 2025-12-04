@@ -17,4 +17,12 @@ class OrderSuccessModel {
       deliveryTime: json["deliveryTime"] ?? "",
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "orderId": orderId,
+      "customerName": customerName,
+      "deliveryTime": deliveryTime,
+    };
+  }
 }

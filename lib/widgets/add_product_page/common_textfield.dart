@@ -6,6 +6,7 @@ class CommonTextField extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   final TextInputType keyboardType;
+  final bool hasError;
 
   const CommonTextField({
     super.key,
@@ -14,20 +15,52 @@ class CommonTextField extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.keyboardType = TextInputType.text,
+    this.hasError = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final surfaceColor = theme.colorScheme.surface;
+    final hintColor = theme.colorScheme.onSurface.withOpacity(0.5);
+    final borderColor = hasError
+        ? theme.colorScheme.error
+        : theme.colorScheme.onSurface.withOpacity(0.15);
+
     return TextField(
       controller: controller,
       readOnly: readOnly,
       onTap: readOnly ? onTap : null,
       keyboardType: keyboardType,
+      style: TextStyle(color: theme.colorScheme.onSurface),
       decoration: InputDecoration(
         hintText: hint,
+        hintStyle: TextStyle(
+          color: hasError ? theme.colorScheme.error : hintColor,
+        ),
         filled: true,
-        fillColor: Colors.grey.shade900,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        fillColor: surfaceColor.withOpacity(0.85),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: borderColor),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: borderColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: hasError
+                ? theme.colorScheme.error
+                : theme.colorScheme.primary,
+            width: 2,
+          ),
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
       ),
     );
   }

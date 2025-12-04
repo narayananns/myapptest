@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:thristoparnterapp/providers/profile_provider.dart';
 
 import '../providers/analytics_provider.dart';
 import '../widgets/partner_analytics_page/bottom_nav.dart';
@@ -28,6 +30,7 @@ class _PartnerAnalyticsPageState extends State<PartnerAnalyticsPage> {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<AnalyticsProvider>();
+    final partnerProvider = context.watch<PartnerProvider>();
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
@@ -55,16 +58,23 @@ class _PartnerAnalyticsPageState extends State<PartnerAnalyticsPage> {
                 children: [
                   CircleAvatar(
                     radius: 18,
-                    backgroundImage: const AssetImage('assets/avatar_placeholder.png'),
+                    backgroundImage:
+                        partnerProvider.partner.profileImage.startsWith(
+                          'assets/',
+                        )
+                        ? AssetImage(partnerProvider.partner.profileImage)
+                              as ImageProvider
+                        : FileImage(File(partnerProvider.partner.profileImage)),
                     backgroundColor: theme.cardColor,
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      provider.data?.storeName ?? "Wild Musafir Clothing",
-                      style: textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ) ??
+                      partnerProvider.partner.storeName,
+                      style:
+                          textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ) ??
                           TextStyle(
                             color: colorScheme.onBackground,
                             fontSize: 22,
@@ -95,10 +105,14 @@ class _PartnerAnalyticsPageState extends State<PartnerAnalyticsPage> {
         onRefresh: provider.refresh,
         color: theme.primaryColor,
         child: provider.loading
-            ? Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(theme.primaryColor)))
+            ? Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(theme.primaryColor),
+                ),
+              )
             : provider.error != null
-                ? _buildError(provider.error!, theme)
-                : _buildBody(context, provider, theme),
+            ? _buildError(provider.error!, theme)
+            : _buildBody(context, provider, theme),
       ),
     );
   }
@@ -112,7 +126,10 @@ class _PartnerAnalyticsPageState extends State<PartnerAnalyticsPage> {
         Center(
           child: Text(
             "Error: $error",
-            style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.error, fontSize: 18),
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.error,
+              fontSize: 18,
+            ),
           ),
         ),
       ],
@@ -120,12 +137,18 @@ class _PartnerAnalyticsPageState extends State<PartnerAnalyticsPage> {
   }
 
   // MAIN BODY
-  Widget _buildBody(BuildContext context, AnalyticsProvider provider, ThemeData theme) {
+  Widget _buildBody(
+    BuildContext context,
+    AnalyticsProvider provider,
+    ThemeData theme,
+  ) {
     if (provider.data == null) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.only(top: 40),
-          child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(theme.primaryColor)),
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation(theme.primaryColor),
+          ),
         ),
       );
     }
@@ -144,13 +167,31 @@ class _PartnerAnalyticsPageState extends State<PartnerAnalyticsPage> {
           children: [
             Text(
               "Analytics ",
-              style: textTheme.titleMedium?.copyWith(color: theme.primaryColor, fontSize: 20, fontWeight: FontWeight.w600)
-                  ?? TextStyle(color: theme.primaryColor, fontSize: 20, fontWeight: FontWeight.w600),
+              style:
+                  textTheme.titleMedium?.copyWith(
+                    color: theme.primaryColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ) ??
+                  TextStyle(
+                    color: theme.primaryColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
             Text(
               "Summary",
-              style: textTheme.titleMedium?.copyWith(color: theme.colorScheme.onBackground, fontSize: 20, fontWeight: FontWeight.w600)
-                  ?? TextStyle(color: theme.colorScheme.onBackground, fontSize: 20, fontWeight: FontWeight.w600),
+              style:
+                  textTheme.titleMedium?.copyWith(
+                    color: theme.colorScheme.onBackground,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ) ??
+                  TextStyle(
+                    color: theme.colorScheme.onBackground,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
           ],
         ),
@@ -179,8 +220,14 @@ class _PartnerAnalyticsPageState extends State<PartnerAnalyticsPage> {
               subtitle: "Active",
               trailing: Text(
                 "+110",
-                style: textTheme.titleLarge?.copyWith(color: theme.colorScheme.secondary) ??
-                    const TextStyle(color: Colors.deepPurpleAccent, fontSize: 22),
+                style:
+                    textTheme.titleLarge?.copyWith(
+                      color: theme.colorScheme.secondary,
+                    ) ??
+                    const TextStyle(
+                      color: Colors.deepPurpleAccent,
+                      fontSize: 22,
+                    ),
               ),
             ),
             SummaryCard(
@@ -189,8 +236,12 @@ class _PartnerAnalyticsPageState extends State<PartnerAnalyticsPage> {
               subtitle: "Avg.Order Value",
               trailing: Text(
                 "+110",
-                style: textTheme.titleLarge?.copyWith(color: theme.primaryColor) ??
-                    const TextStyle(color: Colors.lightBlueAccent, fontSize: 22),
+                style:
+                    textTheme.titleLarge?.copyWith(color: theme.primaryColor) ??
+                    const TextStyle(
+                      color: Colors.lightBlueAccent,
+                      fontSize: 22,
+                    ),
               ),
             ),
             SummaryCard(
@@ -211,8 +262,17 @@ class _PartnerAnalyticsPageState extends State<PartnerAnalyticsPage> {
         // TRAFFIC TITLE
         Text(
           "Traffic & Engagement",
-          style: textTheme.titleLarge?.copyWith(color: theme.colorScheme.onBackground, fontSize: 22, fontWeight: FontWeight.w600)
-              ?? TextStyle(color: theme.colorScheme.onBackground, fontSize: 22, fontWeight: FontWeight.w600),
+          style:
+              textTheme.titleLarge?.copyWith(
+                color: theme.colorScheme.onBackground,
+                fontSize: 22,
+                fontWeight: FontWeight.w600,
+              ) ??
+              TextStyle(
+                color: theme.colorScheme.onBackground,
+                fontSize: 22,
+                fontWeight: FontWeight.w600,
+              ),
         ),
         const SizedBox(height: 12),
 
@@ -257,8 +317,17 @@ class _PartnerAnalyticsPageState extends State<PartnerAnalyticsPage> {
               children: [
                 Text(
                   "Revenue Last 30 Days",
-                  style: textTheme.titleLarge?.copyWith(color: theme.colorScheme.onBackground, fontSize: 26, fontWeight: FontWeight.w600)
-                      ?? TextStyle(color: theme.colorScheme.onBackground, fontSize: 26, fontWeight: FontWeight.w600),
+                  style:
+                      textTheme.titleLarge?.copyWith(
+                        color: theme.colorScheme.onBackground,
+                        fontSize: 26,
+                        fontWeight: FontWeight.w600,
+                      ) ??
+                      TextStyle(
+                        color: theme.colorScheme.onBackground,
+                        fontSize: 26,
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
                 const SizedBox(height: 10),
                 SizedBox(

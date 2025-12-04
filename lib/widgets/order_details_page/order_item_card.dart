@@ -13,59 +13,82 @@ class OrderItemCard extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, size) {
-        final w = size.maxWidth;
-
         return Container(
-          padding: EdgeInsets.all(w * 0.05),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: theme.cardColor,
-            borderRadius: BorderRadius.circular(w * 0.08),
-            border: Border.all(
-              color: onSurface.withOpacity(0.15),
-              width: 1,
-            ),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: onSurface.withOpacity(0.15), width: 1),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(theme.brightness == Brightness.dark ? 0.2 : 0.05),
+                color: Colors.black.withOpacity(
+                  theme.brightness == Brightness.dark ? 0.2 : 0.05,
+                ),
                 blurRadius: 6,
                 offset: const Offset(0, 3),
               ),
             ],
           ),
-          child: Column(
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// IMAGE
+              /// IMAGE (Left)
               ClipRRect(
-                borderRadius: BorderRadius.circular(w * 0.05),
+                borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
                   item.image,
-                  height: w * 0.55,
-                  width: double.infinity,
+                  height: 100,
+                  width: 100,
                   fit: BoxFit.cover,
                 ),
               ),
 
-              SizedBox(height: w * 0.03),
+              const SizedBox(width: 16),
 
-              /// NAME
-              Text(
-                item.name,
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: w * 0.09,
-                  color: onSurface,
+              /// DETAILS (Right)
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    /// NAME
+                    Text(
+                      item.name,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: onSurface,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    /// SIZE - QTY - COLOR
+                    Text(
+                      "Size: ${item.size}",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                    Text(
+                      "Qty: ${item.qty}",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                    Text(
+                      "Color: ${item.color}",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                  ],
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
               ),
-
-              SizedBox(height: w * 0.015),
-
-              /// SIZE - QTY - COLOR
-              Text("Size: ${item.size}", style: TextStyle(color: onSurface.withOpacity(0.7))),
-              Text("Qty: ${item.qty}", style: TextStyle(color: onSurface.withOpacity(0.7))),
-              Text("Color: ${item.color}", style: TextStyle(color: onSurface.withOpacity(0.7))),
             ],
           ),
         );

@@ -1,54 +1,122 @@
 import 'package:flutter/material.dart';
 import '../../../providers/add_product_controller.dart';
-import 'common_textfield.dart';
 
 class ColorRow extends StatelessWidget {
   final AddProductController ctrl;
-  const ColorRow({super.key, required this.ctrl});
+  final bool hasError;
+  const ColorRow({super.key, required this.ctrl, this.hasError = false});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final surfaceColor = theme.colorScheme.surface.withOpacity(0.9);
+    final textColor = theme.colorScheme.onSurface;
+    final borderColor = theme.colorScheme.onSurface.withOpacity(0.4);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // const Text("Product Colours", style: TextStyle(fontSize: 18)),
-        // const SizedBox(height: 10),
-
         Row(
           children: [
             Expanded(
               child: TextField(
                 controller: ctrl.colorCtrl,
-                readOnly: false,
-                onTap: null,
                 keyboardType: TextInputType.text,
+                style: TextStyle(color: textColor),
+
                 decoration: InputDecoration(
-                  hintText: "Enter Colour",
+                  hintText: "Enter Colour *",
+                  hintStyle: TextStyle(
+                    color: hasError
+                        ? theme.colorScheme.error
+                        : theme.colorScheme.onSurface.withOpacity(0.5),
+                  ),
                   filled: true,
-                  fillColor: Colors.grey.shade900,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+                  fillColor: surfaceColor,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 14,
+                  ),
+
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: hasError ? theme.colorScheme.error : borderColor,
+                      width: 1,
+                    ),
+                  ),
+
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: theme.colorScheme.primary,
+                      width: 1.5,
+                    ),
                   ),
                 ),
               ),
             ),
+
             const SizedBox(width: 10),
-            ElevatedButton(onPressed: ctrl.addColor, child: const Text("Add")),
+
+            SizedBox(
+              height: 47,
+              child: ElevatedButton(
+                onPressed: ctrl.addColor,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: theme.colorScheme.primary,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text("Add"),
+              ),
+            ),
           ],
         ),
 
         const SizedBox(height: 10),
 
-        Wrap(
-          spacing: 8,
-          children: List.generate(
-            ctrl.colors.length,
-            (i) => Chip(
-              label: Text(ctrl.colors[i]),
-              deleteIcon: const Icon(Icons.close),
-              onDeleted: () => ctrl.removeColor(i),
-            ),
-          ),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(8),
+          decoration: hasError
+              ? BoxDecoration(
+                  border: Border.all(color: theme.colorScheme.error),
+                  borderRadius: BorderRadius.circular(12),
+                )
+              : null,
+          child: ctrl.colors.isEmpty
+              ? Text(
+                  "No colors added",
+                  style: TextStyle(
+                    color: hasError
+                        ? theme.colorScheme.error
+                        : textColor.withOpacity(0.5),
+                  ),
+                )
+              : Wrap(
+                  spacing: 8,
+                  runSpacing: -4,
+                  children: List.generate(
+                    ctrl.colors.length,
+                    (i) => Chip(
+                      label: Text(
+                        ctrl.colors[i],
+                        style: TextStyle(color: textColor),
+                      ),
+                      backgroundColor: surfaceColor,
+                      deleteIconColor: textColor.withOpacity(0.7),
+                      onDeleted: () => ctrl.removeColor(i),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(color: borderColor, width: 1),
+                      ),
+                    ),
+                  ),
+                ),
         ),
       ],
     );

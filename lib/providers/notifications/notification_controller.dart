@@ -6,7 +6,41 @@ import 'notification_sound_handler.dart';
 import '../../widgets/notification_card/slide_notification_popup.dart';
 
 class NotificationController extends ChangeNotifier {
-  List<NotificationModel> notifications = [];
+  List<NotificationModel> notifications = [
+    NotificationModel(
+      id: "1",
+      customerName: "John Doe",
+      orderId: "ORD-001",
+      productName: "Blue T-Shirt",
+      quantity: 2,
+      isNew: true,
+      status: "Pending",
+      type: "order",
+      timestamp: DateTime.now().subtract(const Duration(minutes: 5)),
+    ),
+    NotificationModel(
+      id: "2",
+      customerName: "Jane Smith",
+      orderId: "ORD-002",
+      productName: "Red Dress",
+      quantity: 1,
+      isNew: false,
+      status: "Accepted",
+      type: "order",
+      timestamp: DateTime.now().subtract(const Duration(hours: 1)),
+    ),
+    NotificationModel(
+      id: "3",
+      customerName: "Mike Johnson",
+      orderId: "ORD-003",
+      productName: "Sneakers",
+      quantity: 1,
+      isNew: true,
+      status: "Shipped",
+      type: "order",
+      timestamp: DateTime.now().subtract(const Duration(days: 1)),
+    ),
+  ];
 
   bool isLoading = false;
 
@@ -26,12 +60,12 @@ class NotificationController extends ChangeNotifier {
     notifications.insert(0, newNotification);
     _sortByLatest();
 
-    if (newNotification.playSound == true ||
-        newNotification.vibrate == true) {
+    if (newNotification.playSound == true || newNotification.vibrate == true) {
       NotificationSoundHandler.playAlert();
     }
 
-    final ctx = navigatorKey.currentContext ??
+    final ctx =
+        navigatorKey.currentContext ??
         navigatorKey.currentState?.overlay?.context;
 
     if (ctx != null) {
@@ -59,15 +93,13 @@ class NotificationController extends ChangeNotifier {
   void markAsRead(String id) {
     final index = notifications.indexWhere((e) => e.id == id);
     if (index != -1) {
-      notifications[index] =
-          notifications[index].copyWith(isNew: false);
+      notifications[index] = notifications[index].copyWith(isNew: false);
       notifyListeners();
     }
   }
 
   void markAllRead() {
-    notifications =
-        notifications.map((n) => n.copyWith(isNew: false)).toList();
+    notifications = notifications.map((n) => n.copyWith(isNew: false)).toList();
     notifyListeners();
   }
 
@@ -81,12 +113,9 @@ class NotificationController extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get unreadCount =>
-      notifications.where((n) => n.isNew == true).length;
+  int get unreadCount => notifications.where((n) => n.isNew == true).length;
 
   void _sortByLatest() {
-    notifications.sort(
-      (a, b) => b.timestamp.compareTo(a.timestamp),
-    );
+    notifications.sort((a, b) => b.timestamp.compareTo(a.timestamp));
   }
 }

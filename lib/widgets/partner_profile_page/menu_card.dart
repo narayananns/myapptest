@@ -22,10 +22,12 @@ class MenuCard extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final w = constraints.maxWidth;
+        final h = constraints.maxHeight;
 
-        // Fully responsive sizes
-        final iconSize = (w * 0.18).clamp(28.0, 40.0);
-        final titleFont = (w * 0.10).clamp(14.0, 20.0);
+        // Responsive sizes based on the smaller dimension to ensure fit
+        final sizeRef = w < h ? w : h;
+        final iconSize = (sizeRef * 0.25).clamp(24.0, 36.0);
+        final titleFont = (sizeRef * 0.12).clamp(12.0, 16.0);
 
         return GestureDetector(
           onTap: () {
@@ -37,23 +39,16 @@ class MenuCard extends StatelessWidget {
             }
           },
           child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: w * 0.08,
-              vertical: w * 0.09,
-            ),
+            padding: EdgeInsets.all(w * 0.05), // Reduced padding
             decoration: BoxDecoration(
-              color: theme.cardColor, // adapts to theme
+              color: theme.cardColor,
               borderRadius: BorderRadius.circular(16),
-
-              // Dynamic border (light: grey, dark: subtle)
               border: Border.all(
                 color: theme.brightness == Brightness.dark
                     ? Colors.white.withOpacity(0.12)
                     : Colors.black.withOpacity(0.12),
                 width: 1,
               ),
-
-              // Dynamic shadow
               boxShadow: [
                 BoxShadow(
                   color: theme.brightness == Brightness.dark
@@ -72,49 +67,48 @@ class MenuCard extends StatelessWidget {
                   children: [
                     showDot
                         ? Container(
-                            height: 10,
-                            width: 10,
+                            height: 8,
+                            width: 8,
                             decoration: const BoxDecoration(
                               color: Colors.green,
                               shape: BoxShape.circle,
                             ),
                           )
-                        : const SizedBox(height: 10, width: 10),
+                        : const SizedBox(height: 8, width: 8),
 
                     Icon(
                       Icons.arrow_forward_ios,
-                      size: 16,
+                      size: 14,
                       color: colorScheme.onSurface.withOpacity(0.6),
                     ),
                   ],
                 ),
 
-                SizedBox(height: w * 0.05),
-
                 // ---------------- CENTER CONTENT ----------------
-                Column(
-                  children: [
-                    Icon(
-                      icon,
-                      size: iconSize,
-                      color: theme.primaryColor, // theme-based
-                    ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(icon, size: iconSize, color: theme.primaryColor),
 
-                    SizedBox(height: w * 0.04),
+                      SizedBox(height: h * 0.05),
 
-                    Text(
-                      title,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: colorScheme.onSurface, // dynamic text color
-                        fontSize: titleFont,
-                        fontWeight: FontWeight.w600,
-                        height: 1.2,
+                      Flexible(
+                        child: Text(
+                          title,
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: colorScheme.onSurface,
+                            fontSize: titleFont,
+                            fontWeight: FontWeight.w600,
+                            height: 1.1,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thristoparnterapp/screens/view_all_products_screen.dart';
 import '../../screens/add_product_page.dart';
 
 class QuickActions extends StatelessWidget {
@@ -7,17 +8,23 @@ class QuickActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
-    final h = MediaQuery.of(context).size.height;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    // Responsive sizing logic
+    final isSmallScreen = w < 380;
+    final double fontSize = isSmallScreen ? 11 : 13;
+    final double iconSize = isSmallScreen ? 18 : 20;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          children: const [
+          children: [
             Text(
               'Quick ',
               style: TextStyle(
-                color: Colors.lightBlue,
+                color: colorScheme.primary,
                 fontSize: 22,
                 fontWeight: FontWeight.w600,
               ),
@@ -25,7 +32,7 @@ class QuickActions extends StatelessWidget {
             Text(
               'Actions',
               style: TextStyle(
-                color: Colors.white,
+                color: colorScheme.onBackground,
                 fontSize: 22,
                 fontWeight: FontWeight.w600,
               ),
@@ -38,7 +45,7 @@ class QuickActions extends StatelessWidget {
           children: [
             Expanded(
               child: SizedBox(
-                height: h * 0.065, // responsive height
+                height: 50,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -49,67 +56,84 @@ class QuickActions extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 112, 165, 245),
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
+                    elevation: 2,
                   ),
-                  child: FittedBox(
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.add_a_photo_outlined,
-                          color: Colors.white,
-                          size: w * 0.055,  // responsive icon
-                        ),
-                        SizedBox(width: w * 0.02),
-                        Text(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.add_a_photo_outlined, size: iconSize),
+                      const SizedBox(width: 6),
+                      Flexible(
+                        child: Text(
                           'Add New Product',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: w * 0.04, // responsive text
+                            fontSize: fontSize,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
 
-            SizedBox(width: w * 0.03),
+            const SizedBox(width: 12),
 
             Expanded(
               child: SizedBox(
-                height: h * 0.065,
+                height: 50,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ViewAllProductsScreen(),
+                      ),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor: colorScheme.surface,
+                    foregroundColor: colorScheme.onSurface,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(
+                        color: theme.brightness == Brightness.light
+                            ? Colors.black.withOpacity(0.1)
+                            : colorScheme.outline.withOpacity(0.2),
+                      ),
                     ),
+                    elevation: 2,
                   ),
-                  child: FittedBox(
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.shopping_cart_checkout_outlined,
-                          color: Colors.black,
-                          size: w * 0.055,
-                        ),
-                        SizedBox(width: w * 0.02),
-                        Text(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.shopping_cart_checkout_outlined,
+                        size: iconSize,
+                      ),
+                      const SizedBox(width: 6),
+                      Flexible(
+                        child: Text(
                           'Manage All Products',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: Colors.black,
-                            fontSize: w * 0.04,
+                            fontSize: fontSize,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

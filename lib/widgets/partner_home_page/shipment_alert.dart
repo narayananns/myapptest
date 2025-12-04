@@ -10,17 +10,20 @@ class ShipmentAlert extends StatelessWidget {
     // Hide widget if no pending shipments
     if (pendingShipments <= 0) return SizedBox.shrink();
 
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.orange.shade700,
+        color: colorScheme.errorContainer,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         children: [
-          const Icon(
+          Icon(
             Icons.warning_amber_rounded,
-            color: Colors.black,
+            color: colorScheme.onErrorContainer,
             size: 38,
           ),
           const SizedBox(width: 12),
@@ -28,8 +31,8 @@ class ShipmentAlert extends StatelessWidget {
           Expanded(
             child: Text(
               'Urgent : $pendingShipments Shipment Pending',
-              style: const TextStyle(
-                color: Colors.black,
+              style: TextStyle(
+                color: colorScheme.onErrorContainer,
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
               ),
@@ -48,19 +51,25 @@ class ShipmentAlert extends StatelessWidget {
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: colorScheme.onErrorContainer,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Column(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'View',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      style: TextStyle(
+                        color: colorScheme.errorContainer,
+                        fontSize: 14,
+                      ),
                     ),
                     Text(
                       'Details',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      style: TextStyle(
+                        color: colorScheme.errorContainer,
+                        fontSize: 14,
+                      ),
                     ),
                   ],
                 ),

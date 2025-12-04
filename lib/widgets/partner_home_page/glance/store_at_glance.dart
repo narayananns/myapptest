@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../models/dashboard_model.dart';
+import '../../../models/dashboard_home_model.dart';
 import 'glance/glance_circular_card.dart';
 import 'glance/glance_icon_card.dart';
 import 'glance/glance_percent_card.dart';

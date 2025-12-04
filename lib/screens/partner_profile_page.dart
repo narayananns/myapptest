@@ -1,10 +1,12 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:thristoparnterapp/providers/profile_provider.dart';
 import 'package:provider/provider.dart';
 import '../models/profile_page/theme_provider.dart';
 import 'package:thristoparnterapp/widgets/partner_profile_page/menu_card.dart';
 import 'package:thristoparnterapp/widgets/partner_profile_page/profile_header.dart';
-import 'order_details_page.dart';
+import 'overall_orders.dart';
 
 class PartnerProfilePage extends StatelessWidget {
   const PartnerProfilePage({super.key});
@@ -14,10 +16,90 @@ class PartnerProfilePage extends StatelessWidget {
     final provider = Provider.of<PartnerProvider>(context);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
 
     Future<void> _refreshData() async {
       await provider.refreshPartner();
+    }
+
+    void _showEditDialog(BuildContext context, PartnerProvider provider) {
+      final nameController = TextEditingController(
+        text: provider.partner.storeName,
+      );
+      String? tempImagePath = provider.partner.profileImage;
+      final ImagePicker picker = ImagePicker();
+
+      showDialog(
+        context: context,
+        builder: (context) => StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text("Edit Profile"),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GestureDetector(
+                    onTap: () async {
+                      final XFile? image = await picker.pickImage(
+                        source: ImageSource.gallery,
+                      );
+                      if (image != null) {
+                        setState(() {
+                          tempImagePath = image.path;
+                        });
+                      }
+                    },
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: 40,
+                          backgroundImage: tempImagePath!.startsWith('assets/')
+                              ? AssetImage(tempImagePath!) as ImageProvider
+                              : FileImage(File(tempImagePath!)),
+                          backgroundColor: Theme.of(
+                            context,
+                          ).colorScheme.surfaceContainerHighest,
+                        ),
+                        Icon(
+                          Icons.camera_alt,
+                          size: 30,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withOpacity(0.54),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  TextField(
+                    controller: nameController,
+                    decoration: const InputDecoration(
+                      labelText: "Store Name",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("Cancel"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    provider.updatePartner(
+                      name: nameController.text,
+                      imagePath: tempImagePath,
+                    );
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Save"),
+                ),
+              ],
+            );
+          },
+        ),
+      );
     }
 
     return Scaffold(
@@ -41,9 +123,10 @@ class PartnerProfilePage extends StatelessWidget {
                 ProfileHeader(
                   name: provider.partner.storeName,
                   image: provider.partner.profileImage,
+                  onEdit: () => _showEditDialog(context, provider),
                 ),
 
-                const SizedBox(height: 30),
+                const SizedBox(height: 10),
 
                 /// Menu Grid
                 GridView(
@@ -53,14 +136,14 @@ class PartnerProfilePage extends StatelessWidget {
                     crossAxisCount: 2,
                     crossAxisSpacing: 14,
                     mainAxisSpacing: 14,
-                    childAspectRatio: 1.1,
+                    childAspectRatio: 1.25, // Slightly adjusted for safety
                   ),
                   children: [
                     MenuCard(
                       title: "My Orders",
                       icon: Icons.shopping_cart,
                       showDot: true,
-                      navigateTo: const OrderDetailsPage(),
+                      navigateTo: const OverallOrdersPage(),
                     ),
                     MenuCard(
                       title: "Store Timings",
@@ -109,8 +192,8 @@ class PartnerProfilePage extends StatelessWidget {
                     child: Text(
                       "Logout",
                       style: TextStyle(
-                        // ensure contrast using onPrimary if available, else fall back
-                        color: colorScheme.onPrimary ?? (isDark ? Colors.black : Colors.white),
+                        // ensure contrast using onPrimary
+                        color: colorScheme.onPrimary,
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
@@ -128,7 +211,6 @@ class PartnerProfilePage extends StatelessWidget {
   PreferredSizeWidget buildAppBar(BuildContext context) {
     final theme = Theme.of(context);
     final iconColor = theme.iconTheme.color;
-    final colorScheme = theme.colorScheme;
     return AppBar(
       backgroundColor: theme.appBarTheme.backgroundColor ?? Colors.transparent,
       elevation: theme.appBarTheme.elevation ?? 10,
@@ -163,7 +245,9 @@ class PartnerProfilePage extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
-      selectedItemColor: theme.bottomNavigationBarTheme.selectedItemColor ?? theme.primaryColor,
+      selectedItemColor:
+          theme.bottomNavigationBarTheme.selectedItemColor ??
+          theme.primaryColor,
       unselectedItemColor: theme.bottomNavigationBarTheme.unselectedItemColor,
 
       onTap: (index) {
@@ -183,9 +267,18 @@ class PartnerProfilePage extends StatelessWidget {
       },
 
       items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home, color: theme.iconTheme.color), label: "Home"),
-        BottomNavigationBarItem(icon: Icon(Icons.bar_chart, color: theme.iconTheme.color), label: "Analytics"),
-        BottomNavigationBarItem(icon: Icon(Icons.person, color: theme.iconTheme.color), label: "Profile"),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home, color: theme.iconTheme.color),
+          label: "Home",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.bar_chart, color: theme.iconTheme.color),
+          label: "Analytics",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person, color: theme.iconTheme.color),
+          label: "Profile",
+        ),
       ],
     );
   }
