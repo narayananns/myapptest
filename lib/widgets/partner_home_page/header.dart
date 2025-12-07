@@ -15,30 +15,34 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final partnerProvider = Provider.of<PartnerProvider>(context);
     final profileImage = partnerProvider.partner.profileImage;
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     return AppBar(
-      backgroundColor: colorScheme.surface,
+      backgroundColor: const Color.fromRGBO(36, 36, 36, 1),
       elevation: 0,
-      scrolledUnderElevation: 4,
+      scrolledUnderElevation: 0,
       automaticallyImplyLeading: false,
       flexibleSpace: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
-            top: 30,
+            top: 10,
             left: 10,
             right: 10,
             bottom: 10,
           ),
           child: Row(
             children: [
-              CircleAvatar(
-                radius: 18,
-                backgroundImage: _getImageProvider(profileImage),
-                onBackgroundImageError: (_, __) {
-                  // Fallback handled by showing nothing or default background color
-                },
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 2),
+                ),
+                child: CircleAvatar(
+                  radius: 18,
+                  backgroundImage: _getImageProvider(profileImage),
+                  onBackgroundImageError: (_, __) {
+                    // Fallback handled by showing nothing or default background color
+                  },
+                ),
               ),
               const SizedBox(width: 12),
 
@@ -46,8 +50,8 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
               Expanded(
                 child: Text(
                   storeName,
-                  style: TextStyle(
-                    color: colorScheme.onSurface,
+                  style: const TextStyle(
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
                   ),
@@ -69,9 +73,9 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                             ),
                           );
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.notifications,
-                          color: colorScheme.onSurface,
+                          color: Colors.white,
                         ),
                       ),
                       if (notifCtrl.unreadCount > 0)
@@ -109,7 +113,11 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   );
                 },
-                icon: Icon(Icons.person_outline, color: colorScheme.onSurface),
+                icon: const Icon(
+                  Icons.person_outline,
+                  size: 28,
+                  color: Colors.white,
+                ),
               ),
             ],
           ),
@@ -127,5 +135,5 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(100);
+  Size get preferredSize => const Size.fromHeight(80);
 }

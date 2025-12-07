@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
-import 'package:thristoparnterapp/screens/add_product_page.dart';
+import 'package:thristoparnterapp/screens/edit_product_page.dart';
 import '../../models/view_all_products_model.dart';
 import '../../providers/view_product_controller.dart';
 
@@ -255,10 +255,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddProductScreen(
-                            isEdit: true,
-                            existingProduct: product,
-                          ),
+                          builder: (context) =>
+                              EditProductScreen(existingProduct: product),
                         ),
                       );
                     },

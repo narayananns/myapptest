@@ -19,7 +19,6 @@ class DropdownField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final surfaceColor = theme.colorScheme.surface.withOpacity(0.85);
     final textColor = theme.colorScheme.onSurface;
     final hintColor = theme.colorScheme.onSurface.withOpacity(0.5);
     final borderColor = hasError
@@ -32,20 +31,20 @@ class DropdownField extends StatelessWidget {
 
       decoration: InputDecoration(
         filled: true,
-        fillColor: surfaceColor,
+        fillColor: const Color.fromRGBO(63, 63, 63, 1),
         hintStyle: TextStyle(
           color: hasError ? theme.colorScheme.error : hintColor,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(6),
           borderSide: BorderSide(color: borderColor),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(6),
           borderSide: BorderSide(color: borderColor),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(6),
           borderSide: BorderSide(
             color: hasError
                 ? theme.colorScheme.error

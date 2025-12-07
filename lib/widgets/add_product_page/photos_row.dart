@@ -27,13 +27,24 @@ class PhotosRow extends StatelessWidget {
               child: Container(
                 width: 90,
                 decoration: BoxDecoration(
-                  color: surfaceColor.withOpacity(0.7),
+                  color: const Color.fromRGBO(176, 176, 176, 1),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
                     color: theme.colorScheme.onBackground.withOpacity(0.15),
                   ),
                 ),
-                child: Icon(Icons.add_a_photo, size: 28, color: iconColor),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.add_a_photo, size: 28, color: Colors.black),
+                    const SizedBox(height: 4),
+                    Text(
+                      "Tap to\nAdd Images",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 10, color: Colors.black),
+                    ),
+                  ],
+                ),
               ),
             );
           }

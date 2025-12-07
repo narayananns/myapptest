@@ -17,14 +17,21 @@ import '../widgets/add_product_page/stock_chip.dart';
 import '../widgets/add_product_page/color_chip.dart';
 import '../widgets/add_product_page/stock_popup.dart';
 
-class AddProductScreen extends StatefulWidget {
-  const AddProductScreen({super.key});
+class EditProductScreen extends StatefulWidget {
+  final bool isEdit;
+  final ProductModel? existingProduct;
+
+  const EditProductScreen({
+    super.key,
+    this.isEdit = true, // Default to true for Edit Screen
+    this.existingProduct,
+  });
 
   @override
-  State<AddProductScreen> createState() => _AddProductScreenState();
+  State<EditProductScreen> createState() => _EditProductScreenState();
 }
 
-class _AddProductScreenState extends State<AddProductScreen> {
+class _EditProductScreenState extends State<EditProductScreen> {
   // Validation State
   bool _nameError = false;
   bool _idError = false;
@@ -39,6 +46,14 @@ class _AddProductScreenState extends State<AddProductScreen> {
   @override
   void initState() {
     super.initState();
+    // Always load data for edit screen
+    if (widget.existingProduct != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final ctrl = Provider.of<AddProductController>(context, listen: false);
+        // Populate controller with existingProduct data
+        ctrl.setData(widget.existingProduct!);
+      });
+    }
   }
 
   bool _validate(AddProductController ctrl) {
@@ -72,7 +87,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add New Product"),
+        title: const Text("Edit Product"),
         scrolledUnderElevation: 0,
         backgroundColor: const Color.fromARGB(255, 36, 36, 36),
       ),
@@ -541,7 +556,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
                         // Create Product Model
                         final newProduct = ProductModel(
-                          id: DateTime.now().millisecondsSinceEpoch.toString(),
+                          id: widget.existingProduct != null
+                              ? widget.existingProduct!.id
+                              : DateTime.now().millisecondsSinceEpoch
+                                    .toString(),
                           name: ctrl.nameCtrl.text,
                           images: ctrl.productPhotos.isNotEmpty
                               ? ctrl.productPhotos
@@ -552,22 +570,19 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           description: ctrl.descriptionCtrl.text,
                           stockList: List.from(ctrl.stockList),
                           colors: List.from(ctrl.colors),
-                          sold: 0,
+                          sold: widget.existingProduct != null
+                              ? widget.existingProduct!.sold
+                              : 0,
                         );
 
-                        productCtrl.addProduct(newProduct);
+                        // Always update since this is Edit Screen
+                        productCtrl.updateProduct(newProduct);
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                            content: Text("Product Added Successfully!"),
+                            content: Text("Product Updated Successfully!"),
                           ),
                         );
-                        // Navigate to View All Products Screen
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ViewAllProductsScreen(),
-                          ),
-                        );
+                        Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 50),
@@ -578,7 +593,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                         ),
                       ),
                       child: const Text(
-                        "Add Product",
+                        "Update Product",
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,

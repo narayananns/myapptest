@@ -27,7 +27,7 @@ class OrderProvider {
         size: 'L',
         qty: 1,
         color: 'Blue',
-        image: 'assets/shirt.png',
+        image: 'assets/images/zoro.jpg',
         orderId: '#Sp-2024-00123',
       ),
       OrderItemModel(
@@ -35,7 +35,7 @@ class OrderProvider {
         size: 'Free',
         qty: 1,
         color: 'Brown',
-        image: 'assets/watch.png',
+        image: 'assets/images/zoro.jpg',
         orderId: '#Sp-2024-00123',
       ),
     ];

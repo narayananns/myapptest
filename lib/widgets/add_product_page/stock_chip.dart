@@ -9,10 +9,17 @@ class StockChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Chip(
-      label: Text("Qty: ${stock.quantity} - Size: ${stock.size}"),
-      deleteIcon: const Icon(Icons.close),
+      backgroundColor: Colors.transparent,
+      side: BorderSide(color: theme.colorScheme.onSurface.withOpacity(0.15)),
+      label: Text(
+        "Qty: ${stock.quantity} - Size: ${stock.size}",
+        style: const TextStyle(color: Colors.white),
+      ),
+      deleteIcon: const Icon(Icons.close, size: 18, color: Colors.white),
       onDeleted: onDelete,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
     );
   }
 }

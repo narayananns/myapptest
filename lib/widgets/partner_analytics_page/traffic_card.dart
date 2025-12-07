@@ -5,6 +5,7 @@ class TrafficCard extends StatelessWidget {
   final String value;
   final String subtitle;
   final String changeLabel;
+  final Color? valueColor;
 
   const TrafficCard({
     super.key,
@@ -12,6 +13,7 @@ class TrafficCard extends StatelessWidget {
     required this.value,
     required this.subtitle,
     required this.changeLabel,
+    this.valueColor,
   });
 
   @override
@@ -26,11 +28,9 @@ class TrafficCard extends StatelessWidget {
 
         return Container(
           decoration: BoxDecoration(
-            color: theme.cardColor,
+            color: Color.fromRGBO(36, 36, 36, 1),
             borderRadius: BorderRadius.circular(w * 0.05),
-            border: Border.all(
-              color: onSurface.withOpacity(0.08),
-            ),
+            border: Border.all(color: onSurface.withOpacity(0.08)),
           ),
           padding: EdgeInsets.symmetric(
             horizontal: w * 0.05,
@@ -43,28 +43,40 @@ class TrafficCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        color: onSurface.withOpacity(0.70),
-                        fontSize: w * 0.07,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          color: onSurface.withOpacity(0.70),
+                          fontSize: w * 0.09,
+                        ),
                       ),
                     ),
                     SizedBox(height: h * 0.01),
-                    Text(
-                      value,
-                      style: TextStyle(
-                        fontSize: w * 0.09,
-                        fontWeight: FontWeight.bold,
-                        color: onSurface,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        value,
+                        style: TextStyle(
+                          fontSize: w * 0.13,
+                          fontWeight: FontWeight.bold,
+                          color: valueColor ?? Colors.white,
+                        ),
                       ),
                     ),
                     SizedBox(height: h * 0.005),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        fontSize: w * 0.07,
-                        color: onSurface.withOpacity(0.55),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        subtitle,
+                        style: TextStyle(
+                          fontSize: w * 0.08,
+                          color: onSurface.withOpacity(0.55),
+                        ),
                       ),
                     ),
                   ],
@@ -72,23 +84,13 @@ class TrafficCard extends StatelessWidget {
               ),
 
               if (changeLabel.isNotEmpty)
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: w * 0.03,
-                    vertical: h * 0.02,
-                  ),
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.primary.withOpacity(0.12),
-                    borderRadius: BorderRadius.circular(w * 0.04),
-                  ),
-                  child: FittedBox(
-                    child: Text(
-                      changeLabel,
-                      style: TextStyle(
-                        color: theme.colorScheme.primary,
-                        fontSize: w * 0.05,
-                        fontWeight: FontWeight.bold,
-                      ),
+                FittedBox(
+                  child: Text(
+                    changeLabel,
+                    style: TextStyle(
+                      color: Colors.deepPurpleAccent,
+                      fontSize: w * 0.12,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),

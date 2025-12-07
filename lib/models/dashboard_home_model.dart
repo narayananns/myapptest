@@ -30,7 +30,7 @@ class DashboardModel {
       totalOrders: json['totalOrders'] ?? 0,
       storePageVisits: json['storePageVisits'] ?? 0,
       totalSales: json['totalSales'] ?? 0,
-      growthText: json['growthText'] ?? '-',
+      growthText: json['growthText'] ?? '+15%',
       pendingShipments: json['pendingShipments'] ?? 2,
     );
   }

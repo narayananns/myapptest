@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class MenuCard extends StatelessWidget {
-  final IconData icon;
+  final String imagePath;
   final String title;
   final bool showDot;
   final Widget? navigateTo;
 
   const MenuCard({
     super.key,
-    required this.icon,
+    required this.imagePath,
     required this.title,
     this.showDot = false,
     this.navigateTo,
@@ -26,8 +26,8 @@ class MenuCard extends StatelessWidget {
 
         // Responsive sizes based on the smaller dimension to ensure fit
         final sizeRef = w < h ? w : h;
-        final iconSize = (sizeRef * 0.25).clamp(24.0, 36.0);
-        final titleFont = (sizeRef * 0.12).clamp(12.0, 16.0);
+        final iconSize = (sizeRef * 0.35).clamp(30.0, 48.0);
+        final titleFont = (sizeRef * 0.13).clamp(12.0, 16.0);
 
         return GestureDetector(
           onTap: () {
@@ -39,10 +39,11 @@ class MenuCard extends StatelessWidget {
             }
           },
           child: Container(
-            padding: EdgeInsets.all(w * 0.05), // Reduced padding
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: theme.cardColor,
-              borderRadius: BorderRadius.circular(16),
+              color: const Color.fromRGBO(31, 31, 31, 1),
+              borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 color: theme.brightness == Brightness.dark
                     ? Colors.white.withOpacity(0.12)
@@ -59,50 +60,61 @@ class MenuCard extends StatelessWidget {
                 ),
               ],
             ),
-            child: Column(
+            child: Stack(
               children: [
                 // ---------------- TOP ROW ----------------
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    showDot
-                        ? Container(
-                            height: 8,
-                            width: 8,
-                            decoration: const BoxDecoration(
-                              color: Colors.green,
-                              shape: BoxShape.circle,
-                            ),
-                          )
-                        : const SizedBox(height: 8, width: 8),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      showDot
+                          ? Container(
+                              height: 8,
+                              width: 8,
+                              decoration: const BoxDecoration(
+                                color: Colors.green,
+                                shape: BoxShape.circle,
+                              ),
+                            )
+                          : const SizedBox(height: 8, width: 8),
 
-                    Icon(
-                      Icons.arrow_forward_ios,
-                      size: 14,
-                      color: colorScheme.onSurface.withOpacity(0.6),
-                    ),
-                  ],
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 14,
+                        color: colorScheme.onSurface.withOpacity(0.6),
+                      ),
+                    ],
+                  ),
                 ),
 
                 // ---------------- CENTER CONTENT ----------------
-                Expanded(
+                Center(
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(icon, size: iconSize, color: theme.primaryColor),
+                      Image.asset(
+                        imagePath,
+                        width: iconSize,
+                        height: iconSize,
+                        fit: BoxFit.contain,
+                      ),
 
-                      SizedBox(height: h * 0.05),
+                      SizedBox(height: h * 0.06),
 
                       Flexible(
                         child: Text(
                           title,
-                          maxLines: 2,
+                          maxLines: 3,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                            color: colorScheme.onSurface,
+                            color: Colors.white,
                             fontSize: titleFont,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.bold,
                             height: 1.1,
                           ),
                         ),

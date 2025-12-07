@@ -12,16 +12,16 @@ class RevenueChart extends StatelessWidget {
     final primary = theme.colorScheme.primary;
 
     if (points.isEmpty) {
-      return Center(
-        child: Text('No data', style: theme.textTheme.bodyLarge),
-      );
+      return Center(child: Text('No data', style: theme.textTheme.bodyLarge));
     }
 
     final w = MediaQuery.of(context).size.width;
     final h = MediaQuery.of(context).size.height;
 
-    final spots =
-        List.generate(points.length, (i) => FlSpot(i.toDouble(), points[i]));
+    final spots = List.generate(
+      points.length,
+      (i) => FlSpot(i.toDouble(), points[i]),
+    );
 
     final maxPoint = points.reduce((a, b) => a > b ? a : b);
     final maxY = (maxPoint * 1.2).clamp(10.0, double.infinity);
@@ -35,10 +35,8 @@ class RevenueChart extends StatelessWidget {
             gridData: FlGridData(
               show: true,
               horizontalInterval: maxY / 4,
-              getDrawingHorizontalLine: (value) => FlLine(
-                color: onBg.withOpacity(0.05),
-                strokeWidth: 1,
-              ),
+              getDrawingHorizontalLine: (value) =>
+                  FlLine(color: onBg.withOpacity(0.05), strokeWidth: 1),
             ),
 
             titlesData: FlTitlesData(
@@ -48,20 +46,26 @@ class RevenueChart extends StatelessWidget {
                   reservedSize: w * 0.12,
                   getTitlesWidget: (value, _) => Text(
                     value.toStringAsFixed(0),
-                    style:
-                        TextStyle(color: onBg.withOpacity(0.6), fontSize: w * 0.035),
+                    style: TextStyle(
+                      color: onBg.withOpacity(0.6),
+                      fontSize: w * 0.035,
+                    ),
                   ),
                 ),
               ),
               topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-              rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              rightTitles: AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
               bottomTitles: AxisTitles(
                 sideTitles: SideTitles(
                   showTitles: true,
                   getTitlesWidget: (value, _) => Text(
                     '${value.toInt() + 1}',
-                    style:
-                        TextStyle(color: onBg.withOpacity(0.6), fontSize: w * 0.035),
+                    style: TextStyle(
+                      color: onBg.withOpacity(0.6),
+                      fontSize: w * 0.035,
+                    ),
                   ),
                 ),
               ),
@@ -94,10 +98,7 @@ class RevenueChart extends StatelessWidget {
                 belowBarData: BarAreaData(
                   show: true,
                   gradient: LinearGradient(
-                    colors: [
-                      primary.withOpacity(0.22),
-                      Colors.transparent,
-                    ],
+                    colors: [primary.withOpacity(0.22), Colors.transparent],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
@@ -110,15 +111,18 @@ class RevenueChart extends StatelessWidget {
             lineTouchData: LineTouchData(
               touchTooltipData: LineTouchTooltipData(
                 getTooltipColor: (_) => theme.cardColor,
-                tooltipPadding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                tooltipPadding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 6,
+                ),
                 tooltipBorderRadius: BorderRadius.circular(6),
                 getTooltipItems: (spots) => spots
-                    .map((e) => LineTooltipItem(
-                          e.y.toStringAsFixed(2),
-                          TextStyle(
-                              color: onBg, fontWeight: FontWeight.bold),
-                        ))
+                    .map(
+                      (e) => LineTooltipItem(
+                        e.y.toStringAsFixed(2),
+                        TextStyle(color: onBg, fontWeight: FontWeight.bold),
+                      ),
+                    )
                     .toList(),
               ),
             ),

@@ -14,11 +14,11 @@ class ProductsLiveCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
-    final h = MediaQuery.of(context).size.height;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    double cardHeight = h * 0.32; // fixed height responsive
+    // Fixed height to ensure consistency across devices and prevent it from being too large
+    double cardHeight = 200;
     double radius = w * 0.12;
     double lineWidth = w * 0.02;
     double percent = count > 0 ? (count / (count + 20)) : 0.7;
@@ -28,7 +28,7 @@ class ProductsLiveCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(w * 0.04),
         decoration: BoxDecoration(
-          color: theme.cardColor,
+          color: Color.fromRGBO(36, 36, 36, 1),
           borderRadius: BorderRadius.circular(12),
           border: theme.brightness == Brightness.light
               ? Border.all(color: Colors.black.withOpacity(0.1))
@@ -53,12 +53,14 @@ class ProductsLiveCard extends StatelessWidget {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Flexible(
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
                       count.toString(),
+                      
                       style: TextStyle(
                         color: colorScheme.onSurface,
                         fontSize: w * 0.08,
@@ -73,7 +75,7 @@ class ProductsLiveCard extends StatelessWidget {
                     horizontal: w * 0.02,
                     vertical: w * 0.008,
                   ),
-                  margin: EdgeInsets.only(bottom: h * 0.03),
+                  margin: EdgeInsets.only(bottom: cardHeight * 0.1),
                   decoration: BoxDecoration(
                     color: status.toLowerCase() == 'active'
                         ? Colors.green
@@ -97,8 +99,8 @@ class ProductsLiveCard extends StatelessWidget {
                 radius: radius,
                 lineWidth: lineWidth,
                 percent: percent,
-                backgroundColor: colorScheme.onSurface.withOpacity(0.1),
-                progressColor: colorScheme.primary,
+                backgroundColor: Color.fromRGBO(88, 194, 255, 0.47),
+                progressColor: Color.fromRGBO(88, 194, 255, 1),
                 circularStrokeCap: CircularStrokeCap.round,
                 center: Text(
                   status,

@@ -17,18 +17,18 @@ class SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final w = MediaQuery.of(context).size.width;
-    final h = MediaQuery.of(context).size.height;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    double cardHeight = h * 0.32; // fixed height same as ProductsLiveCard
+    // Fixed height to ensure consistency across devices and prevent it from being too large
+    double cardHeight = 200;
 
     return SizedBox(
       height: cardHeight,
       child: Container(
         padding: EdgeInsets.all(w * 0.04),
         decoration: BoxDecoration(
-          color: theme.cardColor,
+          color: Color.fromRGBO(36, 36, 36, 1),
           borderRadius: BorderRadius.circular(12),
           border: theme.brightness == Brightness.light
               ? Border.all(color: Colors.black.withOpacity(0.1))
@@ -56,7 +56,7 @@ class SummaryCard extends StatelessWidget {
               children: [
                 Icon(
                   Icons.currency_rupee_outlined,
-                  color: Colors.green,
+                  color: Colors.blue,
                   size: w * 0.07,
                 ),
                 SizedBox(width: w * 0.02),
@@ -78,17 +78,25 @@ class SummaryCard extends StatelessWidget {
             ),
             Row(
               children: [
-                Icon(Icons.arrow_upward, color: Colors.green, size: w * 0.04),
+                Icon(Icons.arrow_upward, color: Colors.blue, size: w * 0.04),
                 SizedBox(width: w * 0.015),
                 Text(
                   revenueText,
-                  style: TextStyle(color: Colors.green, fontSize: w * 0.035),
+                  style: TextStyle(color: Colors.grey, fontSize: w * 0.035),
                 ),
               ],
             ),
-            Text(
-              growthText,
-              style: TextStyle(color: Colors.green, fontSize: w * 0.035),
+            Row(
+              children: [
+                Text(
+                  "$growthText ",
+                  style: TextStyle(color: Colors.blue, fontSize: w * 0.035),
+                ),
+                Text(
+                  " last month",
+                  style: TextStyle(color: Colors.grey, fontSize: w * 0.035),
+                ),
+              ],
             ),
           ],
         ),

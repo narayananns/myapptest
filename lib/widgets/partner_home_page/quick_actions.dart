@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thristoparnterapp/screens/view_all_products_screen.dart';
 import '../../screens/add_product_page.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class QuickActions extends StatelessWidget {
   const QuickActions({super.key});
@@ -56,18 +57,18 @@ class QuickActions extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: colorScheme.primary,
+                    backgroundColor: const Color.fromRGBO(88, 194, 255, 1),
                     foregroundColor: colorScheme.onPrimary,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(6),
                     ),
                     elevation: 2,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.add_a_photo_outlined, size: iconSize),
+                      Icon(FontAwesomeIcons.tshirt, color: Colors.white),
                       const SizedBox(width: 6),
                       Flexible(
                         child: Text(
@@ -77,6 +78,7 @@ class QuickActions extends StatelessWidget {
                           style: TextStyle(
                             fontSize: fontSize,
                             fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -101,11 +103,11 @@ class QuickActions extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: colorScheme.surface,
+                    backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
                     foregroundColor: colorScheme.onSurface,
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(6),
                       side: BorderSide(
                         color: theme.brightness == Brightness.light
                             ? Colors.black.withOpacity(0.1)
@@ -118,19 +120,39 @@ class QuickActions extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.shopping_cart_checkout_outlined,
+                        FontAwesomeIcons.userTie,
                         size: iconSize,
+                        color: Colors.black,
                       ),
-                      const SizedBox(width: 6),
+                      const SizedBox(width: 12),
                       Flexible(
-                        child: Text(
-                          'Manage All Products',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: fontSize,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Manage All',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                height: 1.1,
+                              ),
+                            ),
+                            Text(
+                              '  Products',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: fontSize,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                                height: 1.1,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

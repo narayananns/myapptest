@@ -134,48 +134,48 @@ class PartnerProfilePage extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 14,
-                    mainAxisSpacing: 14,
-                    childAspectRatio: 1.25, // Slightly adjusted for safety
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                    childAspectRatio: 1.6,
                   ),
                   children: [
                     MenuCard(
                       title: "My Orders",
-                      icon: Icons.shopping_cart,
+                      imagePath: "assets/images/order icon.png",
                       showDot: true,
                       navigateTo: const OverallOrdersPage(),
                     ),
                     MenuCard(
-                      title: "Store Timings",
-                      icon: Icons.access_time,
+                      title: "Store\nTimings",
+                      imagePath: "assets/images/store timings.png",
                       // navigateTo: ,
                     ),
                     MenuCard(
-                      title: "Store Document",
-                      icon: Icons.insert_drive_file,
+                      title: "Store\nDocument",
+                      imagePath: "assets/images/store document.png",
                       // navigateTo: ,
                     ),
                     MenuCard(
-                      title: "Store Bank Details",
-                      icon: Icons.account_balance_wallet,
+                      title: "Store Bank\nDetails",
+                      imagePath: "assets/images/store bank details.png",
                       showDot: true,
                       // navigateTo: ,
                     ),
                     MenuCard(
-                      title: "My Payments",
-                      icon: Icons.payments,
+                      title: "My\nPayments",
+                      imagePath: "assets/images/my payments.png",
                       showDot: true,
                       // navigateTo: ,
                     ),
                     MenuCard(
-                      title: "Monthly Invoice",
-                      icon: Icons.receipt_long,
+                      title: "Monthly\nInvoice",
+                      imagePath: "assets/images/monthly invoice.png",
                       // navigateTo: ,
                     ),
                   ],
                 ),
 
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
 
                 /// Logout Button - uses theme primary color
                 SizedBox(
@@ -210,15 +210,23 @@ class PartnerProfilePage extends StatelessWidget {
 
   PreferredSizeWidget buildAppBar(BuildContext context) {
     final theme = Theme.of(context);
-    final iconColor = theme.iconTheme.color;
     return AppBar(
-      backgroundColor: theme.appBarTheme.backgroundColor ?? Colors.transparent,
+      backgroundColor: const Color.fromRGBO(36, 36, 36, 1),
       elevation: theme.appBarTheme.elevation ?? 10,
+      scrolledUnderElevation: 0,
+      toolbarHeight: 80,
       centerTitle: true,
-      title: Text("Profile", style: theme.textTheme.titleMedium),
+      title: const Text(
+        "Profile",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       leading: IconButton(
         onPressed: () => Navigator.pushReplacementNamed(context, '/home'),
-        icon: Icon(Icons.arrow_back, color: iconColor),
+        icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
       ),
       actions: [
         Consumer<ThemeProvider>(
@@ -228,7 +236,8 @@ class PartnerProfilePage extends StatelessWidget {
               onPressed: () => themeProvider.toggleTheme(),
               icon: Icon(
                 isDark ? Icons.light_mode : Icons.dark_mode,
-                color: iconColor,
+                color: Colors.white,
+                size: 28,
               ),
               tooltip: isDark ? 'Switch to light mode' : 'Switch to dark mode',
             );

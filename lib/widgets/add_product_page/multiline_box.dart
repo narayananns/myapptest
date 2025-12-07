@@ -15,7 +15,6 @@ class MultilineBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final bgColor = theme.colorScheme.surface.withOpacity(0.9);
     final textColor = theme.colorScheme.onSurface;
     final hintColor = theme.colorScheme.onSurface.withOpacity(0.5);
     final borderColor = hasError
@@ -24,10 +23,10 @@ class MultilineBox extends StatelessWidget {
 
     return Container(
       height: 120,
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: EdgeInsets.all(1),
       decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(12),
+        
+        borderRadius: BorderRadius.circular(6),
         border: Border.all(color: borderColor, width: hasError ? 1.5 : 1.0),
       ),
       child: TextField(
@@ -41,7 +40,7 @@ class MultilineBox extends StatelessWidget {
             color: hasError ? theme.colorScheme.error : hintColor,
           ),
           border: InputBorder.none,
-          contentPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.all(6),
         ),
       ),
     );

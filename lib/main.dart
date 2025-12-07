@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'models/view_all_products_model.dart';
 
 /// SCREENS
+import 'screens/auth_screens/login_screen.dart';
 import 'screens/product_details_screen.dart';
 import 'screens/partner_home_page.dart';
 import 'screens/parnter_analytics_page.dart';
@@ -103,6 +104,9 @@ class AppWithTheme extends StatelessWidget {
 
       onGenerateRoute: (settings) {
         switch (settings.name) {
+          case '/login':
+            return _fadeRoute(settings, const LoginScreen());
+
           case '/analytics':
             return _fadeRoute(settings, const PartnerAnalyticsPage());
 

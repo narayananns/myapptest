@@ -9,7 +9,7 @@ class ColorRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final surfaceColor = theme.colorScheme.surface.withOpacity(0.9);
+    final surfaceColor = const Color.fromRGBO(63, 63, 63, 1);
     final textColor = theme.colorScheme.onSurface;
     final borderColor = theme.colorScheme.onSurface.withOpacity(0.4);
 
@@ -77,7 +77,7 @@ class ColorRow extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: 10),
+        const SizedBox(height: 6),
 
         Container(
           width: double.infinity,
@@ -107,7 +107,7 @@ class ColorRow extends StatelessWidget {
                         ctrl.colors[i],
                         style: TextStyle(color: textColor),
                       ),
-                      backgroundColor: surfaceColor,
+                      backgroundColor: Colors.transparent,
                       deleteIconColor: textColor.withOpacity(0.7),
                       onDeleted: () => ctrl.removeColor(i),
                       shape: RoundedRectangleBorder(

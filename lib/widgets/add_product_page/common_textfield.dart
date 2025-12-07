@@ -21,7 +21,6 @@ class CommonTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final surfaceColor = theme.colorScheme.surface;
     final hintColor = theme.colorScheme.onSurface.withOpacity(0.5);
     final borderColor = hasError
         ? theme.colorScheme.error
@@ -39,17 +38,17 @@ class CommonTextField extends StatelessWidget {
           color: hasError ? theme.colorScheme.error : hintColor,
         ),
         filled: true,
-        fillColor: surfaceColor.withOpacity(0.85),
+        fillColor: const Color.fromRGBO(63, 63, 63, 1),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(6),
           borderSide: BorderSide(color: borderColor),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(6),
           borderSide: BorderSide(color: borderColor),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(6),
           borderSide: BorderSide(
             color: hasError
                 ? theme.colorScheme.error

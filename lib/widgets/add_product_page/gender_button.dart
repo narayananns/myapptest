@@ -19,7 +19,7 @@ class GenderButton extends StatelessWidget {
     final isSelected = ctrl.gender == value;
 
     final Color selectedBg = theme.colorScheme.primary;
-    final Color unselectedBg = theme.colorScheme.surface.withOpacity(0.8);
+    final Color unselectedBg = const Color.fromRGBO(63, 63, 63, 1);
 
     final Color selectedTextColor = Colors.white;
     final Color unselectedTextColor = theme.colorScheme.onSurface.withOpacity(

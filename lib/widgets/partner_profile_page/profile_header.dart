@@ -21,6 +21,7 @@ class ProfileHeader extends StatelessWidget {
     return Column(
       children: [
         Stack(
+          clipBehavior: Clip.none,
           children: [
             // ---------------- PROFILE IMAGE ----------------
             GestureDetector(
@@ -49,42 +50,26 @@ class ProfileHeader extends StatelessWidget {
 
             // ---------------- EDIT BUTTON ----------------
             Positioned(
-              right: 6,
-              top: 6,
+              right: -12,
+              top: -12,
               child: InkWell(
                 onTap: onEdit,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(20),
                 child: Container(
-                  padding: const EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: colorScheme.primary,
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.25),
-                        blurRadius: 6,
-                      ),
-                    ],
+                    color: Colors.transparent,
+                    shape: BoxShape.rectangle,
+                    border: Border.all(color: Colors.white, width: 1.1),
                   ),
-                  child: const Icon(Icons.edit, color: Colors.white, size: 16),
+                  child: const Icon(Icons.edit, color: Colors.white, size: 20),
                 ),
               ),
             ),
           ],
         ),
 
-        const SizedBox(height: 14),
-
-        // ---------------- "Profile" LABEL ----------------
-        Text(
-          "Profile",
-          style: theme.textTheme.bodyLarge?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: colorScheme.onBackground.withOpacity(0.7),
-          ),
-        ),
-
-        const SizedBox(height: 6),
+        const SizedBox(height: 8),
 
         // ---------------- USER NAME ----------------
         GestureDetector(

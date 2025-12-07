@@ -5,6 +5,7 @@ class SummaryCard extends StatelessWidget {
   final String value;
   final String subtitle;
   final Widget? trailing;
+  final Color? valueColor;
 
   const SummaryCard({
     super.key,
@@ -12,6 +13,7 @@ class SummaryCard extends StatelessWidget {
     required this.value,
     required this.subtitle,
     this.trailing,
+    this.valueColor,
   });
 
   @override
@@ -26,7 +28,7 @@ class SummaryCard extends StatelessWidget {
 
         return Container(
           decoration: BoxDecoration(
-            color: theme.cardColor,
+            color: const Color.fromRGBO(36, 36, 36, 1),
             borderRadius: BorderRadius.circular(w * 0.05),
             border: Border.all(
               color: onSurface.withOpacity(0.08), // ⭐ Border added
@@ -43,28 +45,40 @@ class SummaryCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        color: onSurface.withOpacity(0.70),
-                        fontSize: w * 0.07,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          color: onSurface.withOpacity(0.70),
+                          fontSize: w * 0.09,
+                        ),
                       ),
                     ),
                     SizedBox(height: h * 0.01),
-                    Text(
-                      value,
-                      style: TextStyle(
-                        fontSize: w * 0.08,
-                        fontWeight: FontWeight.bold,
-                        color: onSurface,
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        value,
+                        style: TextStyle(
+                          fontSize: w * 0.13,
+                          fontWeight: FontWeight.bold,
+                          color: valueColor ?? onSurface,
+                        ),
                       ),
                     ),
                     SizedBox(height: h * 0.005),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        fontSize: w * 0.07,
-                        color: onSurface.withOpacity(0.55),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        subtitle,
+                        style: TextStyle(
+                          fontSize: w * 0.08,
+                          color: onSurface.withOpacity(0.55),
+                        ),
                       ),
                     ),
                   ],
