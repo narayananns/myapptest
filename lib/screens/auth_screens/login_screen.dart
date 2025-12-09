@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../config/app_color.dart';
-import '../../widgets/auth_widgets/assets_paths.dart';
 import '../../widgets/auth_widgets/text_field.dart';
 import 'signup_screen.dart';
 
@@ -59,54 +57,83 @@ class _LoginScreenState extends State<LoginScreen> {
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: AppColors.loginlightBackground,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: height * 0.02),
-
-            /// Top Row - Back + Get Started
-            SafeArea(
-              bottom: false,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    const Icon(Icons.arrow_back_ios_new, color: Colors.black),
-                    const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 18,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Text(
-                        "Get Started",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          // Container 1: Background + Logo
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromRGBO(208, 237, 255, 1),
+                  Color.fromRGBO(140, 207, 248, 1),
+                ],
               ),
             ),
+            child: Column(
+              children: [
+                SizedBox(height: height * 0.02),
 
-            /// Logo and Main Banner
-            SizedBox(height: height * 0.04),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(32),
-              child: Image.asset(AssetPaths.logo, height: 140),
+                /// Top Row - Back + Get Started
+                SafeArea(
+                  bottom: false,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.arrow_back_ios_new,
+                          color: Colors.black,
+                        ),
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 18,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.4),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: const Text(
+                            "Get Started",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                /// Logo and Main Banner
+                SizedBox(height: height * 0.01),
+                Container(
+                  width: 250,
+                  height: 250,
+                  decoration: const BoxDecoration(color: Colors.transparent),
+                  padding: const EdgeInsets.all(20),
+                  child: Image.asset(
+                    'assets/images/thristo logo.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: height * 0.02),
+          ),
 
-            /// White Container Rounded
-            Container(
+          // Container 2: Form
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
               width: width,
+              height: height * 0.55,
               padding: const EdgeInsets.all(22),
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -116,21 +143,34 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 10),
                   const Text(
                     "WELCOME TO THRISTO",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 19,
-                      color: Colors.black,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w900,
+                      fontSize: 20,
+                      height: 1.0,
+                      letterSpacing: 0,
+                      color: Color.fromRGBO(46, 46, 46, 1),
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 8),
                   const Text(
-                    "Enter Your Login Number Below",
-                    style: TextStyle(fontSize: 13, color: Colors.grey),
+                    "Enter Your Login Email Address Below",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      height: 1.0,
+                      letterSpacing: 0,
+                      color: Color.fromRGBO(118, 118, 118, 1),
+                    ),
                   ),
                   const SizedBox(height: 28),
 
@@ -164,16 +204,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   GestureDetector(
                     onTap: _handleLogin,
                     child: Container(
-                      width: width,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      width: double.infinity,
+                      height: 58,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(10),
                         gradient: const LinearGradient(
-                          colors: [
-                            AppColors.primaryBlue,
-                            AppColors.logingradientBlue,
-                          ],
+                          begin: Alignment.centerRight,
+                          end: Alignment.centerLeft,
+                          colors: [Color(0xFF36B1FF), Color(0xFF9ED9FF)],
                         ),
+                        boxShadow: const [
+                          BoxShadow(
+                            offset: Offset(0, 4),
+                            blurRadius: 15.9,
+                            spreadRadius: 0,
+                            color: Color.fromRGBO(0, 0, 0, 0.25),
+                          ),
+                        ],
                       ),
                       child: const Center(
                         child: Text(
@@ -187,36 +234,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 15),
                   const Text(
                     "Forgot Your Password?",
-                    style: TextStyle(color: Colors.grey),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      height: 1.0,
+                      letterSpacing: 0,
+                      color: Color.fromRGBO(134, 134, 134, 1),
+                    ),
                   ),
                   const SizedBox(height: 22),
-
-                  Row(
-                    children: const [
-                      Expanded(child: Divider(color: Colors.grey)),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          "Or Sign up with",
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ),
-                      Expanded(child: Divider(color: Colors.grey)),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  /// Social Icons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      socialIcon(AssetPaths.google),
-                      socialIcon(AssetPaths.twitter),
-                      socialIcon(AssetPaths.facebook),
-                      socialIcon(AssetPaths.apple),
-                    ],
-                  ),
 
                   const SizedBox(height: 25),
                   GestureDetector(
@@ -228,25 +256,51 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       );
                     },
-                    child: const Text.rich(
-                      TextSpan(
-                        text: "Don't Have An Account? ",
-                        style: TextStyle(color: Colors.black),
-                        children: [
-                          TextSpan(
-                            text: "Sign Up Here",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(0, 2),
+                            blurRadius: 19.8,
+                            spreadRadius: 0,
+                            color: Color.fromRGBO(0, 0, 0, 0.25),
                           ),
                         ],
                       ),
-                      textAlign: TextAlign.center,
+                      child: const Text.rich(
+                        TextSpan(
+                          text: "Don't Have An Account? ",
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            height: 1.0,
+                            letterSpacing: 0,
+                            color: Colors.black,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: "Sign Up Here",
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14,
+                                height: 1.0,
+                                letterSpacing: 0,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

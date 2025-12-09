@@ -1,12 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:thristoparnterapp/providers/profile_provider.dart';
+import 'package:thristoparnterapp/providers/profile_page/profile_provider.dart';
 import 'package:provider/provider.dart';
-import '../models/profile_page/theme_provider.dart';
+import '../../models/profile_page/theme_provider.dart';
 import 'package:thristoparnterapp/widgets/partner_profile_page/menu_card.dart';
 import 'package:thristoparnterapp/widgets/partner_profile_page/profile_header.dart';
-import 'overall_orders.dart';
+import '../overall_orders.dart';
+import '../auth_screens/login_screen.dart';
+import 'store_document_page.dart';
+import 'store_timings_screen.dart';
 
 class PartnerProfilePage extends StatelessWidget {
   const PartnerProfilePage({super.key});
@@ -15,7 +18,6 @@ class PartnerProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<PartnerProvider>(context);
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
 
     Future<void> _refreshData() async {
       await provider.refreshPartner();
@@ -126,7 +128,7 @@ class PartnerProfilePage extends StatelessWidget {
                   onEdit: () => _showEditDialog(context, provider),
                 ),
 
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
 
                 /// Menu Grid
                 GridView(
@@ -136,7 +138,7 @@ class PartnerProfilePage extends StatelessWidget {
                     crossAxisCount: 2,
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
-                    childAspectRatio: 1.6,
+                    childAspectRatio: 1.4,
                   ),
                   children: [
                     MenuCard(
@@ -148,12 +150,12 @@ class PartnerProfilePage extends StatelessWidget {
                     MenuCard(
                       title: "Store\nTimings",
                       imagePath: "assets/images/store timings.png",
-                      // navigateTo: ,
+                      navigateTo: const StoreTimingsScreen(),
                     ),
                     MenuCard(
                       title: "Store\nDocument",
                       imagePath: "assets/images/store document.png",
-                      // navigateTo: ,
+                      navigateTo: const DocumentStoreScreen(),
                     ),
                     MenuCard(
                       title: "Store Bank\nDetails",
@@ -175,27 +177,48 @@ class PartnerProfilePage extends StatelessWidget {
                   ],
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 25),
 
                 /// Logout Button - uses theme primary color
-                SizedBox(
-                  width: 200,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: theme.primaryColor, // theme-aware
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                    surfaceTintColor: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    onPressed: () {},
-                    child: Text(
-                      "Logout",
-                      style: TextStyle(
-                        // ensure contrast using onPrimary
-                        color: colorScheme.onPrimary,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                  ),
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                  child: Ink(
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [Colors.lightBlue, Colors.blue],
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Container(
+                      width: 160,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        "Logout",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -254,9 +277,7 @@ class PartnerProfilePage extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: currentIndex,
       backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
-      selectedItemColor:
-          theme.bottomNavigationBarTheme.selectedItemColor ??
-          theme.primaryColor,
+      selectedItemColor: Colors.blue,
       unselectedItemColor: theme.bottomNavigationBarTheme.unselectedItemColor,
 
       onTap: (index) {
@@ -275,19 +296,13 @@ class PartnerProfilePage extends StatelessWidget {
         }
       },
 
-      items: [
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
         BottomNavigationBarItem(
-          icon: Icon(Icons.home, color: theme.iconTheme.color),
-          label: "Home",
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.bar_chart, color: theme.iconTheme.color),
+          icon: Icon(Icons.bar_chart),
           label: "Analytics",
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person, color: theme.iconTheme.color),
-          label: "Profile",
-        ),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
       ],
     );
   }

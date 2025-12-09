@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:provider/provider.dart';
 import '../../providers/add_product_controller.dart';
 import '../../providers/view_product_controller.dart';
-import '../../providers/profile_provider.dart';
+import '../providers/profile_page/profile_provider.dart';
 import '../../models/view_all_products_model.dart';
 import 'view_all_products_screen.dart';
 
@@ -115,7 +115,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: PhotosRow(ctrl: ctrl),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 8),
 
             const SectionTitle(text: "Product Details"),
             const SizedBox(height: 16),
@@ -273,7 +273,12 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   const SizedBox(height: 6),
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.only(
+                      top: 2.5,
+                      bottom: 4,
+                      left: 8,
+                      right: 8,
+                    ),
                     decoration: _quantityError
                         ? BoxDecoration(
                             border: Border.all(
@@ -484,7 +489,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
             const SizedBox(height: 30),
             const SectionTitle(text: "Return Policy"),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -507,7 +512,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 30),
                   Container(
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(

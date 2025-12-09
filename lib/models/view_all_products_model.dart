@@ -10,6 +10,8 @@ class ProductModel {
   final List<ProductStock> stockList; // Updated
   final List<String> colors; // Updated
   final int sold;
+  final int likes;
+  final int wishlist;
 
   ProductModel({
     required this.id,
@@ -21,6 +23,8 @@ class ProductModel {
     required this.stockList,
     required this.colors,
     required this.sold,
+    this.likes = 0,
+    this.wishlist = 0,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -64,6 +68,8 @@ class ProductModel {
       stockList: parsedStock,
       colors: parsedColors,
       sold: int.tryParse(json["sold"].toString()) ?? 0,
+      likes: int.tryParse(json["likes"].toString()) ?? 0,
+      wishlist: int.tryParse(json["wishlist"].toString()) ?? 0,
     );
   }
 
@@ -78,6 +84,8 @@ class ProductModel {
       "stock_list": stockList.map((e) => e.toJson()).toList(),
       "colors": colors,
       "sold": sold,
+      "likes": likes,
+      "wishlist": wishlist,
     };
   }
 }

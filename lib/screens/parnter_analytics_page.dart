@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:thristoparnterapp/providers/profile_provider.dart';
+import 'package:thristoparnterapp/providers/profile_page/profile_provider.dart';
 
 import '../providers/analytics_provider.dart';
 import '../widgets/partner_home_page/header.dart';
@@ -147,7 +147,7 @@ class _PartnerAnalyticsPageState extends State<PartnerAnalyticsPage> {
             crossAxisCount: 2,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
-            childAspectRatio: 1.25,
+            childAspectRatio: 1.55,
           ),
           children: [
             SummaryCard(
@@ -232,7 +232,7 @@ class _PartnerAnalyticsPageState extends State<PartnerAnalyticsPage> {
             crossAxisCount: 2,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
-            childAspectRatio: 1.25,
+            childAspectRatio: 1.55,
           ),
           children: [
             TrafficCard(

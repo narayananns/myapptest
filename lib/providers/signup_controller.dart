@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 
 class SignupController extends ChangeNotifier {
   // Text Controllers
@@ -18,6 +20,8 @@ class SignupController extends ChangeNotifier {
   String? cancelledChequePath;
   String? businessCertPath;
 
+  final ImagePicker _picker = ImagePicker();
+
   void setRole(String value) {
     role = value;
     notifyListeners();
@@ -28,6 +32,113 @@ class SignupController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> pickStoreLogo(BuildContext context) async {
+    try {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        int size = await image.length();
+        if (size > 50 * 1024 * 1024) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("File size exceeds 50MB limit"),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+          return;
+        }
+        storeLogoPath = image.path;
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint("Error picking store logo: $e");
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error: $e"), backgroundColor: Colors.red),
+        );
+      }
+    }
+  }
+
+  Future<void> pickCancelledCheque(BuildContext context) async {
+    debugPrint("pickCancelledCheque called");
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+      );
+
+      if (result != null) {
+        PlatformFile file = result.files.first;
+        if (file.size > 50 * 1024 * 1024) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("File size exceeds 50MB limit"),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+          return;
+        }
+        if (file.path != null) {
+          cancelledChequePath = file.path;
+          notifyListeners();
+        }
+      } else {
+        debugPrint("User canceled the picker");
+      }
+    } catch (e) {
+      debugPrint("Error picking cancelled cheque: $e");
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error: $e"), backgroundColor: Colors.red),
+        );
+      }
+    }
+  }
+
+  Future<void> pickBusinessCert(BuildContext context) async {
+    debugPrint("pickBusinessCert called");
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
+      );
+
+      if (result != null) {
+        PlatformFile file = result.files.first;
+        if (file.size > 50 * 1024 * 1024) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("File size exceeds 50MB limit"),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+          return;
+        }
+        if (file.path != null) {
+          businessCertPath = file.path;
+          notifyListeners();
+        }
+      } else {
+        debugPrint("User canceled the picker");
+      }
+    } catch (e) {
+      debugPrint("Error picking business certificate: $e");
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error: $e"), backgroundColor: Colors.red),
+        );
+      }
+    }
+  }
+
+  // Deprecated methods to maintain compatibility during refactor if needed,
+  // but we will update the UI to use the new methods.
   void uploadStoreLogo(String path) {
     storeLogoPath = path;
     notifyListeners();

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:thristoparnterapp/models/notification_model.dart';
 import 'package:thristoparnterapp/providers/notifications/notification_controller.dart';
-import 'package:thristoparnterapp/providers/profile_provider.dart';
+import 'package:thristoparnterapp/providers/profile_page/profile_provider.dart';
 import '../providers/dashboard_home_provider.dart';
 import '../widgets/partner_home_page/header.dart';
 import '../widgets/partner_home_page/quick_actions.dart';
@@ -60,6 +60,7 @@ class _PartnerHomePageState extends State<PartnerHomePage> {
               status: "pending",
               type: "order",
               timestamp: DateTime.now(),
+              brandName: "Thristo",
             ),
           );
         },

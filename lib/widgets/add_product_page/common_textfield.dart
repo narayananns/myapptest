@@ -31,11 +31,13 @@ class CommonTextField extends StatelessWidget {
       readOnly: readOnly,
       onTap: readOnly ? onTap : null,
       keyboardType: keyboardType,
-      style: TextStyle(color: theme.colorScheme.onSurface),
+      style: TextStyle(color: theme.colorScheme.onSurface, fontSize: 13),
       decoration: InputDecoration(
+        isDense: true,
         hintText: hint,
         hintStyle: TextStyle(
           color: hasError ? theme.colorScheme.error : hintColor,
+          fontSize: 13,
         ),
         filled: true,
         fillColor: const Color.fromRGBO(63, 63, 63, 1),
@@ -53,12 +55,12 @@ class CommonTextField extends StatelessWidget {
             color: hasError
                 ? theme.colorScheme.error
                 : theme.colorScheme.primary,
-            width: 2,
+            width: 1.5,
           ),
         ),
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 14,
+          horizontal: 12,
+          vertical: 10,
         ),
       ),
     );

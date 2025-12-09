@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:thristoparnterapp/screens/order_details_page.dart';
-import 'package:thristoparnterapp/screens/order_success_page.dart';
 import '../../config/app_color.dart';
 
 class ActionButtons extends StatelessWidget {
   final String? deliveryType; // <-- From parent page
+  final VoidCallback? onConfirm;
+  final VoidCallback? onDecline;
 
-  const ActionButtons({super.key, required this.deliveryType});
+  const ActionButtons({
+    super.key,
+    required this.deliveryType,
+    this.onConfirm,
+    this.onDecline,
+  });
 
   // -----------------------------------------------------
   // Show alert to choose delivery type
@@ -81,13 +87,17 @@ class ActionButtons extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context); // Close the dialog first
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      const OrderSuccessPage(orderId: "Sp-2024-00123"),
-                ),
-              );
+              if (isConfirm) {
+                onConfirm?.call(); // Notify parent
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("The order has been confirmed"),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+              } else {
+                onDecline?.call();
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: isConfirm ? Colors.green : Colors.red,

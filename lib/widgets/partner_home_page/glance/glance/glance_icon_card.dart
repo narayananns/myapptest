@@ -23,7 +23,7 @@ class GlanceIconCard extends StatelessWidget {
 
     return Container(
       height: 200,
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Color.fromRGBO(36, 36, 36, 1),
         borderRadius: BorderRadius.circular(12),
@@ -62,9 +62,9 @@ class GlanceIconCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10),
-          Icon(centerIcon, color: centerIconColor, size: 28),
-          const SizedBox(height: 8),
+          const SizedBox(height: 3),
+          Icon(centerIcon, color: centerIconColor, size: 50),
+          const SizedBox(height: 6),
           FittedBox(
             child: Text(
               footerMain,

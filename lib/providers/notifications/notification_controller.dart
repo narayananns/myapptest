@@ -16,6 +16,7 @@ class NotificationController extends ChangeNotifier {
       isNew: true,
       status: "Pending",
       type: "order",
+      brandName: "Thristo",
       timestamp: DateTime.now().subtract(const Duration(minutes: 5)),
     ),
     NotificationModel(
@@ -27,6 +28,7 @@ class NotificationController extends ChangeNotifier {
       isNew: false,
       status: "Accepted",
       type: "order",
+      brandName: "Thristo",
       timestamp: DateTime.now().subtract(const Duration(hours: 1)),
     ),
     NotificationModel(
@@ -38,6 +40,7 @@ class NotificationController extends ChangeNotifier {
       isNew: true,
       status: "Shipped",
       type: "order",
+      brandName: "Thristo",
       timestamp: DateTime.now().subtract(const Duration(days: 1)),
     ),
   ];

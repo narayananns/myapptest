@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:provider/provider.dart';
 import '../../providers/add_product_controller.dart';
 import '../../providers/view_product_controller.dart';
-import '../../providers/profile_provider.dart';
+import '../providers/profile_page/profile_provider.dart';
 import '../../models/view_all_products_model.dart';
 import 'view_all_products_screen.dart';
 
@@ -130,7 +130,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: PhotosRow(ctrl: ctrl),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 10),
 
             const SectionTitle(text: "Product Details"),
             const SizedBox(height: 16),
@@ -273,15 +273,19 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      ElevatedButton(
-                        onPressed: () => openStockPopup(context, ctrl),
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 16,
+                      SizedBox(
+                        height: 37,
+                        child: ElevatedButton(
+                          onPressed: () => openStockPopup(context, ctrl),
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            textStyle: const TextStyle(fontSize: 13),
                           ),
+                          child: const Text("Add"),
                         ),
-                        child: const Text("Add"),
                       ),
                     ],
                   ),
@@ -497,9 +501,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
               ),
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             const SectionTitle(text: "Return Policy"),
-            const SizedBox(height: 16),
+            const SizedBox(height: 10),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),

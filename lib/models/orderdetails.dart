@@ -5,6 +5,7 @@ class OrderItemModel {
   final String color;
   final String image;
   final String orderId;
+  final double price;
 
   OrderItemModel({
     required this.name,
@@ -13,6 +14,7 @@ class OrderItemModel {
     required this.color,
     required this.image,
     required this.orderId,
+    required this.price,
   });
 
   factory OrderItemModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class OrderItemModel {
       color: json['color'] ?? '',
       image: json['image'] ?? '',
       orderId: json['order_id'] ?? '',
+      price: (json['price'] ?? 0).toDouble(),
     );
   }
 
@@ -34,6 +37,7 @@ class OrderItemModel {
       'color': color,
       'image': image,
       'order_id': orderId,
+      'price': price,
     };
   }
 }

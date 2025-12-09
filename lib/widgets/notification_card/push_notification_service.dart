@@ -45,6 +45,7 @@ class PushNotificationService {
       status: data["status"] ?? "pending",
       type: data["type"] ?? "order",
       timestamp: DateTime.tryParse(data["timestamp"] ?? "") ?? DateTime.now(),
+      brandName: data["brand_name"] ?? "Thristo",
       playSound: data["play_sound"]?.toString() != "false",
       vibrate: data["vibrate"]?.toString() != "false",
     );

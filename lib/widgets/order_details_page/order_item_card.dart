@@ -8,91 +8,88 @@ class OrderItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final onSurface = theme.colorScheme.onSurface;
+    // Colors from specs
+    const Color cardBgColor = Color.fromRGBO(255, 255, 255, 1);
+    const Color imageBgColor = Color.fromRGBO(217, 217, 217, 0.29);
+    const Color nameColor = Color.fromRGBO(0, 0, 0, 1);
+    const Color detailsColor = Color.fromRGBO(111, 111, 111, 1);
+    const Color shadowColor = Color.fromRGBO(80, 80, 80, 0.21);
 
-    return LayoutBuilder(
-      builder: (context, size) {
-        return Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: theme.cardColor,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: onSurface.withOpacity(0.15), width: 1),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(
-                  theme.brightness == Brightness.dark ? 0.2 : 0.05,
-                ),
-                blurRadius: 6,
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /// IMAGE (Left)
-              ClipRRect(
+    return Container(
+      decoration: BoxDecoration(
+        color: cardBgColor,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: const [
+          BoxShadow(color: shadowColor, blurRadius: 19.7, offset: Offset(0, 4)),
+        ],
+      ),
+      child: Stack(
+        children: [
+          // Image
+          Positioned(
+            left: 12,
+            top: 15, // Approximate vertical centering
+            child: Container(
+              width: 60,
+              height: 80,
+              decoration: BoxDecoration(
+                color: imageBgColor,
                 borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  item.image,
-                  height: 100,
-                  width: 100,
-                  fit: BoxFit.cover,
-                ),
               ),
-
-              const SizedBox(width: 16),
-
-              /// DETAILS (Right)
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    /// NAME
-                    Text(
-                      item.name,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                        color: onSurface,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-
-                    const SizedBox(height: 8),
-
-                    /// SIZE - QTY - COLOR
-                    Text(
-                      "Size: ${item.size}",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: onSurface.withOpacity(0.7),
-                      ),
-                    ),
-                    Text(
-                      "Qty: ${item.qty}",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: onSurface.withOpacity(0.7),
-                      ),
-                    ),
-                    Text(
-                      "Color: ${item.color}",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: onSurface.withOpacity(0.7),
-                      ),
-                    ),
-                  ],
-                ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(item.image, fit: BoxFit.cover),
               ),
-            ],
+            ),
           ),
-        );
-      },
+
+          // Text Details
+          Positioned(
+            left: 84, // 12 (padding) + 60 (image) + 12 (gap)
+            top: 12,
+            right: 8,
+            bottom: 12,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  item.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: nameColor,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  "Size: ${item.size}",
+                  style: const TextStyle(color: detailsColor, fontSize: 10),
+                ),
+                Text(
+                  "Qty: ${item.qty}",
+                  style: const TextStyle(color: detailsColor, fontSize: 10),
+                ),
+                Text(
+                  "Color: ${item.color}",
+                  style: const TextStyle(color: detailsColor, fontSize: 10),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  "Price: ₹${item.price.toInt()}",
+                  style: const TextStyle(
+                    color: detailsColor,
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

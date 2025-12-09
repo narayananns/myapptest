@@ -44,21 +44,27 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         padding: EdgeInsets.zero,
         children: [
           /// 🔹 IMAGE CAROUSEL
-          CarouselSlider.builder(
-            itemCount: product.images.length,
-            itemBuilder: (_, index, __) {
-              return AspectRatio(
-                aspectRatio: 9 / 9,
-                child: _buildImage(product.images[index]),
-              );
-            },
-            options: CarouselOptions(
-              height: 350,
-              enlargeCenterPage: true,
-              viewportFraction: 1,
-              onPageChanged: (index, _) {
-                setState(() => activeIndex = index);
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+            child: CarouselSlider.builder(
+              itemCount: product.images.length,
+              itemBuilder: (_, index, __) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: _buildImage(product.images[index]),
+                  ),
+                );
               },
+              options: CarouselOptions(
+                height: 350,
+                enlargeCenterPage: false,
+                viewportFraction: 1,
+                onPageChanged: (index, _) {
+                  setState(() => activeIndex = index);
+                },
+              ),
             ),
           ),
 
@@ -81,6 +87,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               ),
             ),
           ),
+
+          const SizedBox(height: 16),
 
           /// 🔹 MAIN INFO CONTAINER
           Container(
@@ -113,7 +121,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           "₹${product.sellingPrice.toInt()}",
                           style: TextStyle(
                             color: theme.colorScheme.primary,
-                            fontSize: 18,
+                            fontSize: 24,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -125,7 +133,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               color: theme.colorScheme.onSurface.withOpacity(
                                 0.5,
                               ),
-                              fontSize: 14,
+                              fontSize: 24,
                               decoration: TextDecoration.lineThrough,
                             ),
                           ),
@@ -200,6 +208,43 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
 
                 const SizedBox(height: 20),
+
+                /// 🔸 LIKES + WISHLIST
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "LIKES",
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      product.likes.toString(),
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 12),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "WISHLIST",
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      product.wishlist.toString(),
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 12),
 
                 /// 🔸 STOCK + SOLD
                 Row(

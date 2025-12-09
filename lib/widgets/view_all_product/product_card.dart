@@ -36,9 +36,9 @@ class ProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// IMAGE RATIO - 9:16
+            /// IMAGE RATIO - 3:4
             AspectRatio(
-              aspectRatio: 9 / 16,
+              aspectRatio: 3 / 4,
               child: ClipRRect(
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(12),
@@ -55,6 +55,7 @@ class ProductCard extends StatelessWidget {
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: textColor,
                   fontWeight: FontWeight.w600,
+                  fontSize: 16,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -64,26 +65,38 @@ class ProductCard extends StatelessWidget {
             /// PRICE SECTION
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-              child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "₹${product.sellingPrice.toInt()}",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                      color: priceColor,
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "₹${product.sellingPrice.toInt()}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            color: priceColor,
+                          ),
+                        ),
+                        if (product.mrp > product.sellingPrice) ...[
+                          const SizedBox(width: 8),
+                          Text(
+                            "₹${product.mrp.toInt()}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              decoration: TextDecoration.lineThrough,
+                              color: textColor.withOpacity(0.5),
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
                   ),
-                  if (product.mrp > product.sellingPrice) ...[
-                    const SizedBox(width: 8),
-                    Text(
-                      "₹${product.mrp.toInt()}",
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        decoration: TextDecoration.lineThrough,
-                        color: textColor.withOpacity(0.5),
-                      ),
-                    ),
-                  ],
                 ],
               ),
             ),

@@ -13,6 +13,7 @@ class OrderProvider {
         color: 'Blue',
         image: "assets/images/zoro.jpg",
         orderId: '#Sp-2024-00123',
+        price: 1200,
       ),
       OrderItemModel(
         name: 'Running Shoe',
@@ -21,6 +22,7 @@ class OrderProvider {
         color: 'Black',
         image: "assets/images/zoro.jpg",
         orderId: '#Sp-2024-00123',
+        price: 2500,
       ),
       OrderItemModel(
         name: 'Blue Shirt',
@@ -29,6 +31,7 @@ class OrderProvider {
         color: 'Blue',
         image: 'assets/images/zoro.jpg',
         orderId: '#Sp-2024-00123',
+        price: 800,
       ),
       OrderItemModel(
         name: 'Watch',
@@ -37,10 +40,8 @@ class OrderProvider {
         color: 'Brown',
         image: 'assets/images/zoro.jpg',
         orderId: '#Sp-2024-00123',
+        price: 1500,
       ),
     ];
   }
 }
-
-
-

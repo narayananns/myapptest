@@ -58,7 +58,7 @@ class StoreAtGlance extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: GlancePercentCard(
-                title: 'Store Page Visit',
+                title: 'Store Page\n    Visits',
                 centerNumber: (model?.storePageVisits ?? 0).toString(),
                 percentText: '+10%',
                 // use theme secondary/primary for percent indicator

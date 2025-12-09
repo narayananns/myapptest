@@ -85,6 +85,19 @@ class _ViewAllProductsScreenState extends State<ViewAllProductsScreen> {
     final primary = theme.colorScheme.primary;
     final inactive = theme.colorScheme.onSurface.withOpacity(0.5);
 
+    // Filter products based on tab
+    final filteredProducts = controller.products.where((product) {
+      final totalStock = product.stockList.fold(
+        0,
+        (sum, item) => sum + item.quantity,
+      );
+      if (selectedTab == 0) {
+        return totalStock > 0; // Live Products
+      } else {
+        return totalStock == 0; // Out of Stock
+      }
+    }).toList();
+
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
       appBar: AppBar(
@@ -105,48 +118,58 @@ class _ViewAllProductsScreenState extends State<ViewAllProductsScreen> {
                 Expanded(
                   child: GestureDetector(
                     onTap: () => setState(() => selectedTab = 0),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Live Products",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: selectedTab == 0 ? primary : inactive,
+                    behavior: HitTestBehavior.opaque,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: Column(
+                        children: [
+                          Text(
+                            "Live Products",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: selectedTab == 0 ? primary : inactive,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          height: 3,
-                          color: selectedTab == 0
-                              ? primary
-                              : Colors.transparent,
-                        ),
-                      ],
+                          const SizedBox(height: 8),
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            height: 3,
+                            color: selectedTab == 0
+                                ? primary
+                                : Colors.transparent,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
                   child: GestureDetector(
                     onTap: () => setState(() => selectedTab = 1),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Out of Stock",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: selectedTab == 1 ? primary : inactive,
+                    behavior: HitTestBehavior.opaque,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: Column(
+                        children: [
+                          Text(
+                            "Out of Stock",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: selectedTab == 1 ? primary : inactive,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 200),
-                          height: 3,
-                          color: selectedTab == 1
-                              ? primary
-                              : Colors.transparent,
-                        ),
-                      ],
+                          const SizedBox(height: 8),
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 200),
+                            height: 3,
+                            color: selectedTab == 1
+                                ? primary
+                                : Colors.transparent,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -156,23 +179,24 @@ class _ViewAllProductsScreenState extends State<ViewAllProductsScreen> {
 
           const SizedBox(height: 12),
 
-          /// GRID VIEW — LIVE PRODUCTS
+          /// GRID VIEW
           Expanded(
-            child: selectedTab == 0
+            child: filteredProducts.isNotEmpty
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: LayoutBuilder(
                       builder: (context, constraints) {
                         double gridWidth = constraints.maxWidth;
                         double cardWidth = (gridWidth - 12) / 2;
-                        double imageHeight = cardWidth * (16 / 9);
-                        double textSpace = 70;
+                        double imageHeight = cardWidth / (3 / 4);
+                        double textSpace =
+                            70; // Reduced as stock info is removed
                         double finalRatio =
                             cardWidth / (imageHeight + textSpace);
 
                         return GridView.builder(
                           padding: const EdgeInsets.only(bottom: 10),
-                          itemCount: controller.products.length,
+                          itemCount: filteredProducts.length,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
@@ -181,7 +205,7 @@ class _ViewAllProductsScreenState extends State<ViewAllProductsScreen> {
                                 mainAxisSpacing: 12,
                               ),
                           itemBuilder: (_, index) {
-                            final product = controller.products[index];
+                            final product = filteredProducts[index];
 
                             return ProductCard(
                               product: product,
@@ -200,10 +224,11 @@ class _ViewAllProductsScreenState extends State<ViewAllProductsScreen> {
                       },
                     ),
                   )
-                /// OUT OF STOCK VIEW
                 : Center(
                     child: Text(
-                      "Out of stock products",
+                      selectedTab == 0
+                          ? "No live products"
+                          : "No out of stock products",
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: inactive,
                       ),

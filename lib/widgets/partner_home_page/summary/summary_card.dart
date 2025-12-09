@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 class SummaryCard extends StatelessWidget {
   final String title;
@@ -28,7 +29,7 @@ class SummaryCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(w * 0.04),
         decoration: BoxDecoration(
-          color: Color.fromRGBO(36, 36, 36, 1),
+          color: const Color.fromRGBO(36, 36, 36, 1),
           borderRadius: BorderRadius.circular(12),
           border: theme.brightness == Brightness.light
               ? Border.all(color: Colors.black.withOpacity(0.1))
@@ -49,7 +50,7 @@ class SummaryCard extends StatelessWidget {
               title,
               style: TextStyle(
                 color: colorScheme.onSurface.withOpacity(0.7),
-                fontSize: w * 0.04,
+                fontSize: math.min(w * 0.04, 16.0),
               ),
             ),
             Row(
@@ -57,7 +58,7 @@ class SummaryCard extends StatelessWidget {
                 Icon(
                   Icons.currency_rupee_outlined,
                   color: Colors.blue,
-                  size: w * 0.07,
+                  size: math.min(w * 0.07, 28.0),
                 ),
                 SizedBox(width: w * 0.02),
                 Expanded(
@@ -68,7 +69,7 @@ class SummaryCard extends StatelessWidget {
                       value,
                       style: TextStyle(
                         color: colorScheme.onSurface,
-                        fontSize: w * 0.08,
+                        fontSize: math.min(w * 0.08, 32.0),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -76,25 +77,40 @@ class SummaryCard extends StatelessWidget {
                 ),
               ],
             ),
-            Row(
+            Column(
               children: [
-                Icon(Icons.arrow_upward, color: Colors.blue, size: w * 0.04),
-                SizedBox(width: w * 0.015),
-                Text(
-                  revenueText,
-                  style: TextStyle(color: Colors.grey, fontSize: w * 0.035),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.arrow_upward,
+                      color: Colors.blue,
+                      size: math.min(w * 0.04, 16.0),
+                    ),
+                    SizedBox(width: w * 0.015),
+                    Text(
+                      revenueText,
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: math.min(w * 0.035, 14.0)),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "$growthText ",
-                  style: TextStyle(color: Colors.blue, fontSize: w * 0.035),
-                ),
-                Text(
-                  " last month",
-                  style: TextStyle(color: Colors.grey, fontSize: w * 0.035),
+                const SizedBox(height: 2),
+                Row(
+                  children: [
+                    Text(
+                      "$growthText ",
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: math.min(w * 0.035, 14.0)),
+                    ),
+                    Text(
+                      " last month",
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: math.min(w * 0.035, 14.0)),
+                    ),
+                  ],
                 ),
               ],
             ),

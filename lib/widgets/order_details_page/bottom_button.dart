@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../../config/app_color.dart';
 
 class BottomButton extends StatelessWidget {
-  const BottomButton({super.key});
+  final VoidCallback? onTap;
+  const BottomButton({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +15,15 @@ class BottomButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
       ),
       child: TextButton.icon(
-        onPressed: () {},
+        onPressed: onTap,
         icon: const Icon(Icons.local_shipping, color: Colors.white),
         label: const Text(
           "Pickup Ready",
           style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold),
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

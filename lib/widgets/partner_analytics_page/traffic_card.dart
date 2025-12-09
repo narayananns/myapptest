@@ -27,6 +27,7 @@ class TrafficCard extends StatelessWidget {
         final h = constraints.maxHeight;
 
         return Container(
+          // height: ,
           decoration: BoxDecoration(
             color: Color.fromRGBO(36, 36, 36, 1),
             borderRadius: BorderRadius.circular(w * 0.05),

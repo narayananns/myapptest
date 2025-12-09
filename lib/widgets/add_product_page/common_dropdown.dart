@@ -28,12 +28,13 @@ class DropdownField extends StatelessWidget {
     return DropdownButtonFormField<String>(
       value: value,
       isExpanded: true,
-
       decoration: InputDecoration(
+        isDense: true,
         filled: true,
         fillColor: const Color.fromRGBO(63, 63, 63, 1),
         hintStyle: TextStyle(
           color: hasError ? theme.colorScheme.error : hintColor,
+          fontSize: 13,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6),
@@ -49,30 +50,29 @@ class DropdownField extends StatelessWidget {
             color: hasError
                 ? theme.colorScheme.error
                 : theme.colorScheme.primary,
-            width: 2,
+            width: 1.5,
           ),
         ),
         contentPadding: const EdgeInsets.symmetric(
-          horizontal: 14,
-          vertical: 14,
+          horizontal: 12,
+          vertical: 10,
         ),
       ),
-
       dropdownColor: theme.colorScheme.surface,
-      style: TextStyle(color: textColor, fontSize: 15),
-
+      style: TextStyle(color: textColor, fontSize: 13),
       hint: Text(
         hint,
-        style: TextStyle(color: hasError ? theme.colorScheme.error : hintColor),
+        style: TextStyle(
+          color: hasError ? theme.colorScheme.error : hintColor,
+          fontSize: 13,
+        ),
       ),
-
       items: items.map((e) {
         return DropdownMenuItem<String>(
           value: e,
-          child: Text(e, style: TextStyle(color: textColor)),
+          child: Text(e, style: TextStyle(color: textColor, fontSize: 13)),
         );
       }).toList(),
-
       onChanged: onChanged,
     );
   }

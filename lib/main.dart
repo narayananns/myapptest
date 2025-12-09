@@ -9,19 +9,21 @@ import 'screens/auth_screens/login_screen.dart';
 import 'screens/product_details_screen.dart';
 import 'screens/partner_home_page.dart';
 import 'screens/parnter_analytics_page.dart';
-import 'screens/partner_profile_page.dart';
+import 'screens/profile_page/partner_profile_page.dart';
 import 'screens/order_success_page.dart';
 
 /// Providers
 import 'models/profile_page/theme_provider.dart';
 import 'providers/dashboard_home_provider.dart';
 import 'providers/analytics_provider.dart';
-import 'providers/profile_provider.dart';
+import 'providers/profile_page/profile_provider.dart';
 import 'providers/add_product_controller.dart';
 import 'providers/order_success_provider.dart';
 import 'providers/order_delivery/delivery_provider.dart';
 import 'providers/view_product_controller.dart';
 import 'providers/notifications/notification_controller.dart';
+import 'providers/profile_page/document_controller.dart';
+import 'providers/profile_page/store_time_controller.dart';
 
 /// Theme
 import 'config/app_theme.dart';
@@ -49,6 +51,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => DeliveryProvider()),
         ChangeNotifierProvider(create: (_) => NotificationController()),
         ChangeNotifierProvider(create: (_) => ProductController()),
+        ChangeNotifierProvider(create: (_) => DocumentController()),
+        ChangeNotifierProvider(create: (_) => StoreTimeController()),
       ],
       child: const AppWithTheme(),
     );

@@ -90,27 +90,64 @@ class NotificationCard extends StatelessWidget {
             const SizedBox(height: 12),
 
             // Details
-            _buildDetailRow(
-              "Order ID",
-              "#${data.orderId}",
-              textColor,
-              subTextColor,
-            ),
-            const SizedBox(height: 4),
-            _buildDetailRow("Name", data.customerName, textColor, subTextColor),
-            const SizedBox(height: 4),
-            _buildDetailRow(
-              "Product",
-              data.productName,
-              textColor,
-              subTextColor,
-            ),
-            const SizedBox(height: 4),
-            _buildDetailRow(
-              "Quantity",
-              "${data.quantity}",
-              textColor,
-              subTextColor,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Brand Logo
+                Container(
+                  width: 80,
+                  height: 80,
+                  margin: const EdgeInsets.only(right: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    shape: BoxShape.circle,
+                    image: const DecorationImage(
+                      image: AssetImage('assets/images/zoro.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      _buildDetailRow(
+                        "Brand Name",
+                        "Zoro",
+                        textColor,
+                        subTextColor,
+                      ),
+                      const SizedBox(height: 4),
+                      _buildDetailRow(
+                        "Order ID",
+                        "#${data.orderId}",
+                        textColor,
+                        subTextColor,
+                      ),
+                      const SizedBox(height: 4),
+                      _buildDetailRow(
+                        "Name",
+                        data.customerName,
+                        textColor,
+                        subTextColor,
+                      ),
+                      const SizedBox(height: 4),
+                      _buildDetailRow(
+                        "Product",
+                        data.productName,
+                        textColor,
+                        subTextColor,
+                      ),
+                      const SizedBox(height: 4),
+                      _buildDetailRow(
+                        "Quantity",
+                        "${data.quantity}",
+                        textColor,
+                        subTextColor,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
 
             const SizedBox(height: 12),

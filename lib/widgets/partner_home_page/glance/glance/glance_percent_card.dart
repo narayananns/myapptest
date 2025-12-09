@@ -23,7 +23,7 @@ class GlancePercentCard extends StatelessWidget {
 
     return Container(
       height: 200,
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Color.fromRGBO(36, 36, 36, 1),
         borderRadius: BorderRadius.circular(12),

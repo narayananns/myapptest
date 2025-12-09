@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:thristoparnterapp/providers/profile_provider.dart';
+import 'package:thristoparnterapp/providers/profile_page/profile_provider.dart';
 import 'package:thristoparnterapp/providers/notifications/notification_controller.dart';
-import '../../screens/partner_profile_page.dart';
+import 'package:thristoparnterapp/providers/profile_page/store_time_controller.dart';
+import '../../screens/profile_page/partner_profile_page.dart';
 import '../../screens/notification_panel_screen.dart';
 
 class Header extends StatelessWidget implements PreferredSizeWidget {
@@ -14,7 +15,11 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final partnerProvider = Provider.of<PartnerProvider>(context);
+    final storeTimeCtrl = Provider.of<StoreTimeController>(context);
     final profileImage = partnerProvider.partner.profileImage;
+
+    // Mock status for now (Offline/Online)
+    const String storeStatus = "OFFLINE";
 
     return AppBar(
       backgroundColor: const Color.fromRGBO(36, 36, 36, 1),
@@ -46,15 +51,49 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
               ),
               const SizedBox(width: 12),
 
-              /// Store Name
+              /// Store Name and Status
               Expanded(
-                child: Text(
-                  storeName,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      storeName,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          storeStatus,
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        const SizedBox(width: 5),
+                        const Text(
+                          "|",
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          storeTimeCtrl.isStoreOpen ? "OPEN" : "CLOSED",
+                          style: TextStyle(
+                            color: storeTimeCtrl.isStoreOpen
+                                ? Colors.green
+                                : Colors.red,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
 

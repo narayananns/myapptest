@@ -18,28 +18,48 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      maxLines: maxLines,
-      style: const TextStyle(color: Colors.black),
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
-        hintText: hint,
-        hintStyle: const TextStyle(color: Colors.grey),
-        suffixIcon: suffixIcon,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 18,
-          vertical: 16,
+    return SizedBox(
+      height: 58,
+      child: TextField(
+        controller: controller,
+        obscureText: obscureText,
+        maxLines: maxLines,
+        style: const TextStyle(
+          color: Colors.black,
+          fontFamily: 'Inter',
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.black38),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.black),
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          hintText: hint,
+          hintStyle: const TextStyle(
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w500,
+            fontSize: 14,
+            height: 1.0,
+            color: Color.fromRGBO(166, 166, 166, 1),
+          ),
+          suffixIcon: suffixIcon,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 18, // Adjusted for 58px height
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(
+              color: Color.fromRGBO(180, 180, 180, 1),
+              width: 1.5,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(
+              color: Color.fromRGBO(180, 180, 180, 1),
+              width: 1.5,
+            ),
+          ),
         ),
       ),
     );

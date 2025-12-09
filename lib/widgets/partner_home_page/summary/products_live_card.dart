@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'dart:math' as math;
 
 class ProductsLiveCard extends StatelessWidget {
   final int count;
@@ -19,8 +20,8 @@ class ProductsLiveCard extends StatelessWidget {
 
     // Fixed height to ensure consistency across devices and prevent it from being too large
     double cardHeight = 200;
-    double radius = w * 0.12;
-    double lineWidth = w * 0.02;
+    double radius = math.min(w * 0.1, 40.0);
+    double lineWidth = math.min(w * 0.02, 8.0);
     double percent = count > 0 ? (count / (count + 20)) : 0.7;
 
     return SizedBox(
@@ -28,7 +29,7 @@ class ProductsLiveCard extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(w * 0.04),
         decoration: BoxDecoration(
-          color: Color.fromRGBO(36, 36, 36, 1),
+          color: const Color.fromRGBO(36, 36, 36, 1),
           borderRadius: BorderRadius.circular(12),
           border: theme.brightness == Brightness.light
               ? Border.all(color: Colors.black.withOpacity(0.1))
@@ -43,15 +44,16 @@ class ProductsLiveCard extends StatelessWidget {
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               'Products Live',
               style: TextStyle(
                 color: colorScheme.onSurface.withOpacity(0.7),
-                fontSize: w * 0.04,
+                fontSize: math.min(w * 0.04, 16.0),
               ),
             ),
+            const SizedBox(height: 3),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -60,38 +62,15 @@ class ProductsLiveCard extends StatelessWidget {
                     fit: BoxFit.scaleDown,
                     child: Text(
                       count.toString(),
-                      
                       style: TextStyle(
                         color: colorScheme.onSurface,
-                        fontSize: w * 0.08,
+                        fontSize: math.min(w * 0.08, 32.0),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
                 SizedBox(width: w * 0.02),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: w * 0.02,
-                    vertical: w * 0.008,
-                  ),
-                  margin: EdgeInsets.only(bottom: cardHeight * 0.1),
-                  decoration: BoxDecoration(
-                    color: status.toLowerCase() == 'active'
-                        ? Colors.green
-                        : colorScheme.error,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Text(
-                    status,
-                    style: TextStyle(
-                      color: Colors
-                          .white, // White text on Green/Red usually works better than black
-                      fontWeight: FontWeight.bold,
-                      fontSize: w * 0.035,
-                    ),
-                  ),
-                ),
               ],
             ),
             Center(
@@ -99,14 +78,14 @@ class ProductsLiveCard extends StatelessWidget {
                 radius: radius,
                 lineWidth: lineWidth,
                 percent: percent,
-                backgroundColor: Color.fromRGBO(88, 194, 255, 0.47),
-                progressColor: Color.fromRGBO(88, 194, 255, 1),
+                backgroundColor: const Color.fromRGBO(88, 194, 255, 0.47),
+                progressColor: const Color.fromRGBO(88, 194, 255, 1),
                 circularStrokeCap: CircularStrokeCap.round,
                 center: Text(
                   status,
                   style: TextStyle(
                     color: colorScheme.onSurface.withOpacity(0.7),
-                    fontSize: w * 0.04,
+                    fontSize: math.min(w * 0.04, 16.0),
                   ),
                 ),
               ),

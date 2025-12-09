@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../providers/add_product_controller.dart';
+import 'common_textfield.dart';
 
 class ColorRow extends StatelessWidget {
   final AddProductController ctrl;
@@ -9,7 +10,6 @@ class ColorRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final surfaceColor = const Color.fromRGBO(63, 63, 63, 1);
     final textColor = theme.colorScheme.onSurface;
     final borderColor = theme.colorScheme.onSurface.withOpacity(0.4);
 
@@ -19,48 +19,17 @@ class ColorRow extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: TextField(
+              child: CommonTextField(
+                hint: "Enter Colour *",
                 controller: ctrl.colorCtrl,
-                keyboardType: TextInputType.text,
-                style: TextStyle(color: textColor),
-
-                decoration: InputDecoration(
-                  hintText: "Enter Colour *",
-                  hintStyle: TextStyle(
-                    color: hasError
-                        ? theme.colorScheme.error
-                        : theme.colorScheme.onSurface.withOpacity(0.5),
-                  ),
-                  filled: true,
-                  fillColor: surfaceColor,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 14,
-                  ),
-
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: hasError ? theme.colorScheme.error : borderColor,
-                      width: 1,
-                    ),
-                  ),
-
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: theme.colorScheme.primary,
-                      width: 1.5,
-                    ),
-                  ),
-                ),
+                hasError: hasError,
               ),
             ),
 
             const SizedBox(width: 10),
 
             SizedBox(
-              height: 47,
+              height: 37,
               child: ElevatedButton(
                 onPressed: ctrl.addColor,
                 style: ElevatedButton.styleFrom(
@@ -68,7 +37,7 @@ class ColorRow extends StatelessWidget {
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(6),
                   ),
                 ),
                 child: const Text("Add"),

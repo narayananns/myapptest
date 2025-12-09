@@ -50,19 +50,32 @@ class ProfileHeader extends StatelessWidget {
 
             // ---------------- EDIT BUTTON ----------------
             Positioned(
-              right: -12,
-              top: -12,
-              child: InkWell(
+              top: -10,
+              right: -10,
+              child: GestureDetector(
                 onTap: onEdit,
-                borderRadius: BorderRadius.circular(20),
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    shape: BoxShape.rectangle,
-                    border: Border.all(color: Colors.white, width: 1.1),
+                    color: theme.colorScheme.primary,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: theme.scaffoldBackgroundColor,
+                      width: 2.5,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 6,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
                   ),
-                  child: const Icon(Icons.edit, color: Colors.white, size: 20),
+                  child: Icon(
+                    Icons.edit,
+                    color: theme.colorScheme.onPrimary,
+                    size: 16,
+                  ),
                 ),
               ),
             ),

@@ -30,10 +30,10 @@ class GenderButton extends StatelessWidget {
       onTap: () => ctrl.updateGender(value),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(vertical: 12),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
           color: isSelected ? selectedBg : unselectedBg,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(6),
           border: Border.all(
             color: isSelected
                 ? selectedBg
@@ -48,15 +48,16 @@ class GenderButton extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                size: 20,
+                size: 16,
                 color: isSelected ? selectedTextColor : unselectedTextColor,
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: 4),
               Text(
                 value,
                 style: TextStyle(
                   color: isSelected ? selectedTextColor : unselectedTextColor,
                   fontWeight: FontWeight.w500,
+                  fontSize: 13,
                 ),
               ),
             ],

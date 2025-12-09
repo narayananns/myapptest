@@ -6,12 +6,12 @@ class NotificationModel {
   final int quantity;
 
   /// UI + logic related
-  final bool isNew;                 // unread / read
-  final String status;              // pending, accepted, rejected
-  final String type;                // order, system, message (optional)
-
+  final bool isNew; // unread / read
+  final String status; // pending, accepted, rejected
+  final String type;
+  final String brandName; // need to check the brandName variable is given correct
   /// Time details
-  final DateTime timestamp;         // when notification created
+  final DateTime timestamp; // when notification created
 
   /// Local behavior overrides
   final bool playSound;
@@ -27,6 +27,7 @@ class NotificationModel {
     required this.status,
     required this.type,
     required this.timestamp,
+    required this.brandName,
     this.playSound = true,
     this.vibrate = true,
   });
@@ -47,6 +48,7 @@ class NotificationModel {
       timestamp: json["timestamp"] != null
           ? DateTime.tryParse(json["timestamp"]) ?? DateTime.now()
           : DateTime.now(),
+      brandName: json["brand_name"] ?? "Thristo",
       playSound: json["play_sound"] ?? true,
       vibrate: json["vibrate"] ?? true,
     );
@@ -64,6 +66,7 @@ class NotificationModel {
       "status": status,
       "type": type,
       "timestamp": timestamp.toIso8601String(),
+      "brand_name": brandName,
       "play_sound": playSound,
       "vibrate": vibrate,
     };
@@ -80,6 +83,7 @@ class NotificationModel {
     String? status,
     String? type,
     DateTime? timestamp,
+    String? brandName,
     bool? playSound,
     bool? vibrate,
   }) {
@@ -93,6 +97,7 @@ class NotificationModel {
       status: status ?? this.status,
       type: type ?? this.type,
       timestamp: timestamp ?? this.timestamp,
+      brandName: brandName ?? this.brandName,
       playSound: playSound ?? this.playSound,
       vibrate: vibrate ?? this.vibrate,
     );

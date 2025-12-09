@@ -24,7 +24,7 @@ class GlanceCircularCard extends StatelessWidget {
 
     return Container(
       height: 200,
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Color.fromRGBO(36, 36, 36, 1),
         borderRadius: BorderRadius.circular(12),
@@ -69,14 +69,14 @@ class GlanceCircularCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           
           FittedBox(
             child: Text(
               footerMain,
               style: TextStyle(
                 color: colorScheme.onSurface.withOpacity(0.5),
-                fontSize: 14,
+                fontSize: 16,
               ),
             ),
           ),
