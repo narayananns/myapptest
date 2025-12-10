@@ -10,6 +10,7 @@ import '../overall_orders.dart';
 import '../auth_screens/login_screen.dart';
 import 'store_document_page.dart';
 import 'store_timings_screen.dart';
+import 'mypayment_page.dart';
 
 class PartnerProfilePage extends StatelessWidget {
   const PartnerProfilePage({super.key});
@@ -75,6 +76,7 @@ class PartnerProfilePage extends StatelessWidget {
                   const SizedBox(height: 20),
                   TextField(
                     controller: nameController,
+                    textCapitalization: TextCapitalization.sentences,
                     decoration: const InputDecoration(
                       labelText: "Store Name",
                       border: OutlineInputBorder(),
@@ -121,6 +123,8 @@ class PartnerProfilePage extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
+                const SizedBox(height: 10),
+
                 /// Profile Section
                 ProfileHeader(
                   name: provider.partner.storeName,
@@ -167,7 +171,7 @@ class PartnerProfilePage extends StatelessWidget {
                       title: "My\nPayments",
                       imagePath: "assets/images/my payments.png",
                       showDot: true,
-                      // navigateTo: ,
+                      navigateTo: const PaymentPage(),
                     ),
                     MenuCard(
                       title: "Monthly\nInvoice",

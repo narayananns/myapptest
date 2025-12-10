@@ -31,6 +31,7 @@ class CommonTextField extends StatelessWidget {
       readOnly: readOnly,
       onTap: readOnly ? onTap : null,
       keyboardType: keyboardType,
+      textCapitalization: TextCapitalization.sentences,
       style: TextStyle(color: theme.colorScheme.onSurface, fontSize: 13),
       decoration: InputDecoration(
         isDense: true,

@@ -21,7 +21,7 @@ class _DocumentStoreScreenState extends State<DocumentStoreScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(36, 36, 36, 1),
         elevation: 0,
@@ -50,7 +50,7 @@ class _DocumentStoreScreenState extends State<DocumentStoreScreen> {
                           crossAxisCount: 2,
                           mainAxisSpacing: 18,
                           crossAxisSpacing: 18,
-                          childAspectRatio: 1.0, 
+                          childAspectRatio: 1.0,
                         ),
                     itemCount: controller.folders.length,
                     itemBuilder: (context, index) {

@@ -24,6 +24,9 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         obscureText: obscureText,
         maxLines: maxLines,
+        textCapitalization: obscureText
+            ? TextCapitalization.none
+            : TextCapitalization.sentences,
         style: const TextStyle(
           color: Colors.black,
           fontFamily: 'Inter',

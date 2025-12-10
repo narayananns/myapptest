@@ -23,30 +23,16 @@ class DashboardModel {
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) {
     return DashboardModel(
-      storeName: json['storeName'] ?? 'Nithin X Mia Clothing',
+      storeName: json['storeName'] ?? 'Wild Musafir Clothing',
       productsLive: json['productsLive'] ?? 0,
       productsLiveStatus: json['productsLiveStatus'] ?? 'Active',
       orderPlaced: json['orderPlaced'] ?? 5,
       totalOrders: json['totalOrders'] ?? 0,
       storePageVisits: json['storePageVisits'] ?? 0,
       totalSales: json['totalSales'] ?? 0,
-      growthText: json['growthText'] ?? '+15%',
+      growthText: json['growthText'] ?? '-',
       pendingShipments: json['pendingShipments'] ?? 2,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'storeName': storeName,
-      'productsLive': productsLive,
-      'productsLiveStatus': productsLiveStatus,
-      'orderPlaced': orderPlaced,
-      'totalOrders': totalOrders,
-      'storePageVisits': storePageVisits,
-      'totalSales': totalSales,
-      'growthText': growthText,
-      'pendingShipments': pendingShipments,
-    };
   }
 
   // helper formatting

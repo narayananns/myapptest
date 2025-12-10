@@ -19,7 +19,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
     final profileImage = partnerProvider.partner.profileImage;
 
     // Mock status for now (Offline/Online)
-    const String storeStatus = "OFFLINE";
+    const String storeStatus = "Offline";
 
     return AppBar(
       backgroundColor: const Color.fromRGBO(36, 36, 36, 1),
@@ -67,10 +67,12 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                     ),
                     Row(
                       children: [
-                        const Text(
+                        Text(
                           storeStatus,
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: storeStatus == "Online"
+                                ? Colors.blue
+                                : Colors.yellow,
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
                           ),
@@ -82,7 +84,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                         ),
                         const SizedBox(width: 5),
                         Text(
-                          storeTimeCtrl.isStoreOpen ? "OPEN" : "CLOSED",
+                          storeTimeCtrl.isStoreOpen ? "Open" : "Closed",
                           style: TextStyle(
                             color: storeTimeCtrl.isStoreOpen
                                 ? Colors.green

@@ -3,12 +3,14 @@ class FolderModel {
   final String size;
   final String date;
   final String icon;
+  final String? filePath;
 
   FolderModel({
     required this.name,
     required this.size,
     required this.date,
     required this.icon,
+    this.filePath,
   });
 
   // Convert to JSON for backend
@@ -17,6 +19,7 @@ class FolderModel {
     "size": size,
     "date": date,
     "icon": icon,
+    "filePath": filePath,
   };
 
   FolderModel copyWith({
@@ -24,12 +27,14 @@ class FolderModel {
     String? size,
     String? date,
     String? icon,
+    String? filePath,
   }) {
     return FolderModel(
       name: name ?? this.name,
       size: size ?? this.size,
       date: date ?? this.date,
       icon: icon ?? this.icon,
+      filePath: filePath ?? this.filePath,
     );
   }
 
@@ -38,5 +43,6 @@ class FolderModel {
     size: json["size"] ?? "",
     date: json["date"] ?? "",
     icon: json["icon"] ?? "",
+    filePath: json["filePath"],
   );
 }

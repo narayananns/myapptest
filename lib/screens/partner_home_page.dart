@@ -10,6 +10,7 @@ import '../widgets/partner_home_page/summary/summary_card.dart';
 import '../widgets/partner_home_page/summary/products_live_card.dart';
 import '../widgets/partner_home_page/glance/store_at_glance.dart';
 import '../widgets/partner_home_page/shipment_alert.dart';
+import 'view_all_products_screen.dart';
 
 class PartnerHomePage extends StatefulWidget {
   const PartnerHomePage({super.key});
@@ -90,6 +91,118 @@ class _PartnerHomePageState extends State<PartnerHomePage> {
 
               // pass model to StoreAtGlance (theme-aware)
               StoreAtGlance(model: model),
+              const SizedBox(height: 30),
+
+              // Likes and Wishlist Row
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 16,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(36, 36, 36, 1),
+                        borderRadius: BorderRadius.circular(12),
+                        border: theme.brightness == Brightness.light
+                            ? Border.all(color: Colors.black.withOpacity(0.1))
+                            : null,
+                        boxShadow: [
+                          BoxShadow(
+                            color: theme.shadowColor.withOpacity(0.1),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Likes',
+                            style: textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                                size: 24,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                "125",
+                                style: textTheme.bodySmall?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 16,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(36, 36, 36, 1),
+                        borderRadius: BorderRadius.circular(12),
+                        border: theme.brightness == Brightness.light
+                            ? Border.all(color: Colors.black.withOpacity(0.1))
+                            : null,
+                        boxShadow: [
+                          BoxShadow(
+                            color: theme.shadowColor.withOpacity(0.1),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Wishlist',
+                            style: textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(
+                                Icons.bookmark,
+                                color: Colors.blue,
+                                size: 24,
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                "45",
+                                style: textTheme.bodySmall?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 40),
 
               if (provider.isLoading)

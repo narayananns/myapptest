@@ -15,6 +15,12 @@ class _OverallOrdersPageState extends State<OverallOrdersPage> {
   void initState() {
     super.initState();
     if (widget.showUndoSnackbar) {
+      // Update the first order to Declined for demo purposes
+      // In a real app, you would pass the order ID and update that specific order
+      if (orders.isNotEmpty) {
+        orders[0]['status'] = "Declined";
+      }
+
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -59,7 +65,7 @@ class _OverallOrdersPageState extends State<OverallOrdersPage> {
       "username": "Jane Smith",
       "productName": "Women's Summer Dress",
       "quantity": 1,
-      "status": "Order Confirmed",
+      "status": "In Progress",
       "time": "15 mins ago",
       "price": "₹1,499",
       "brandName": "Zara",
@@ -69,7 +75,7 @@ class _OverallOrdersPageState extends State<OverallOrdersPage> {
       "username": "Mike Ross",
       "productName": "Running Shoes",
       "quantity": 1,
-      "status": "Shipped",
+      "status": "In Progress",
       "time": "1 hour ago",
       "price": "₹2,999",
       "brandName": "Adidas",
@@ -79,7 +85,7 @@ class _OverallOrdersPageState extends State<OverallOrdersPage> {
       "username": "Rachel Green",
       "productName": "Leather Handbag",
       "quantity": 1,
-      "status": "Out for Delivery",
+      "status": "In Progress",
       "time": "2 hours ago",
       "price": "₹3,499",
       "brandName": "Gucci",
@@ -99,7 +105,7 @@ class _OverallOrdersPageState extends State<OverallOrdersPage> {
       "username": "Chandler Bing",
       "productName": "Funny Vest",
       "quantity": 1,
-      "status": "Cancelled",
+      "status": "Declined",
       "time": "2 days ago",
       "price": "₹899",
       "brandName": "Bing",
@@ -109,7 +115,7 @@ class _OverallOrdersPageState extends State<OverallOrdersPage> {
       "username": "Joey Tribbiani",
       "productName": "Pizza Cutter",
       "quantity": 2,
-      "status": "Returned",
+      "status": "Declined",
       "time": "3 days ago",
       "price": "₹499",
       "brandName": "Joey's Special",
@@ -140,13 +146,18 @@ class _OverallOrdersPageState extends State<OverallOrdersPage> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: InkWell(
-              onTap: () {
-                Navigator.push(
+              onTap: () async {
+                final result = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => const OrderDetailsPage(),
                   ),
                 );
+                if (result != null && result is String) {
+                  setState(() {
+                    orders[index]['status'] = result;
+                  });
+                }
               },
               borderRadius: BorderRadius.circular(12),
               child: Padding(
@@ -173,41 +184,49 @@ class _OverallOrdersPageState extends State<OverallOrdersPage> {
                         ),
                         Expanded(
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _buildDetailRow(
-                                "Brand Name",
+                              Text(
                                 order["brandName"]?.toString() ?? "N/A",
-                                theme,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: theme.colorScheme.onSurface,
+                                ),
                               ),
-                              const SizedBox(height: 8),
-                              _buildDetailRow(
-                                "Order ID",
+                              const SizedBox(height: 4),
+                              Text(
                                 order["id"]?.toString() ?? "N/A",
-                                theme,
+                                style: TextStyle(
+                                  color: theme.colorScheme.onSurface
+                                      .withOpacity(0.7),
+                                  fontSize: 13,
+                                ),
                               ),
-                              const SizedBox(height: 8),
-                              _buildDetailRow(
-                                "Username",
+                              const SizedBox(height: 4),
+                              Text(
                                 order["username"]?.toString() ?? "N/A",
-                                theme,
+                                style: TextStyle(
+                                  color: theme.colorScheme.onSurface,
+                                  fontSize: 14,
+                                ),
                               ),
-                              const SizedBox(height: 8),
-                              _buildDetailRow(
-                                "Product Name",
+                              const SizedBox(height: 4),
+                              Text(
                                 order["productName"]?.toString() ?? "N/A",
-                                theme,
+                                style: TextStyle(
+                                  color: theme.colorScheme.onSurface,
+                                  fontSize: 14,
+                                ),
                               ),
-                              const SizedBox(height: 8),
-                              _buildDetailRow(
-                                "Quantity",
-                                "${order["quantity"] ?? 0}",
-                                theme,
-                              ),
-                              const SizedBox(height: 8),
-                              _buildDetailRow(
-                                "Price",
+                              const SizedBox(height: 4),
+                              Text(
                                 order["price"]?.toString() ?? "N/A",
-                                theme,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: theme.colorScheme.primary,
+                                  fontSize: 15,
+                                ),
                               ),
                             ],
                           ),
@@ -225,27 +244,27 @@ class _OverallOrdersPageState extends State<OverallOrdersPage> {
                             fontSize: 12,
                           ),
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              "Order Status : ",
-                              style: TextStyle(
-                                color: theme.colorScheme.onSurface.withOpacity(
-                                  0.6,
-                                ),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                              ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: _getStatusColor(
+                              _getDisplayStatus(order["status"]),
                             ),
-                            Text(
-                              order["status"] ?? "Unknown",
-                              style: TextStyle(
-                                color: theme.colorScheme.primary,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            _getDisplayStatus(order["status"]),
+                            style: TextStyle(
+                              color: _getStatusTextColor(
+                                _getDisplayStatus(order["status"]),
                               ),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
                             ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
@@ -259,30 +278,35 @@ class _OverallOrdersPageState extends State<OverallOrdersPage> {
     );
   }
 
-  Widget _buildDetailRow(String label, String value, ThemeData theme) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 120,
-          child: Text(
-            "$label :",
-            style: TextStyle(
-              color: theme.colorScheme.onSurface.withOpacity(0.6),
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        Expanded(
-          child: Text(
-            value,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: theme.colorScheme.onSurface,
-            ),
-          ),
-        ),
-      ],
-    );
+  String _getDisplayStatus(String? status) {
+    if (status == null) return "Unknown";
+    if (status == "Cancelled") return "Declined";
+    if (status == "Shipped" ||
+        status == "Order Confirmed" ||
+        status == "Out for Delivery" ||
+        status == "Returned") {
+      return "In Progress";
+    }
+    return status;
+  }
+
+  Color _getStatusColor(String? status) {
+    switch (status) {
+      case "Delivered":
+        return Colors.green;
+      case "Declined":
+        return Colors.red;
+      case "In Progress":
+        return Colors.yellow;
+      case "New Order":
+        return Colors.blue;
+      default:
+        return Colors.grey.shade200;
+    }
+  }
+
+  Color _getStatusTextColor(String? status) {
+    if (status == "In Progress") return Colors.black;
+    return Colors.white;
   }
 }

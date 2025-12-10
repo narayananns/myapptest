@@ -25,7 +25,6 @@ class MultilineBox extends StatelessWidget {
       height: 120,
       padding: EdgeInsets.all(1),
       decoration: BoxDecoration(
-        
         borderRadius: BorderRadius.circular(6),
         border: Border.all(color: borderColor, width: hasError ? 1.5 : 1.0),
       ),
@@ -33,6 +32,7 @@ class MultilineBox extends StatelessWidget {
         controller: controller,
         maxLines: null,
         expands: true,
+        textCapitalization: TextCapitalization.sentences,
         style: TextStyle(color: textColor),
         decoration: InputDecoration(
           hintText: hint,

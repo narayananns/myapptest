@@ -22,10 +22,16 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       obscureText: obscureText,
       maxLines: maxLines,
+      textCapitalization: obscureText
+          ? TextCapitalization.none
+          : TextCapitalization.sentences,
       decoration: InputDecoration(
         hintText: hint,
         suffixIcon: suffixIcon,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: Colors.grey),
