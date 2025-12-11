@@ -103,7 +103,7 @@ class MenuCard extends StatelessWidget {
                         fit: BoxFit.contain,
                       ),
 
-                      SizedBox(height: h * 0.06),
+                      SizedBox(height: h * 0.03),
 
                       Flexible(
                         child: Text(
@@ -113,7 +113,7 @@ class MenuCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: titleFont,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             height: 1,
                           ),

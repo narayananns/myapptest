@@ -11,6 +11,7 @@ import 'screens/partner_home_page.dart';
 import 'screens/parnter_analytics_page.dart';
 import 'screens/profile_page/partner_profile_page.dart';
 import 'screens/order_success_page.dart';
+import 'screens/admin/admin_dashboard_screen.dart';
 
 /// Providers
 import 'models/profile_page/theme_provider.dart';
@@ -24,6 +25,7 @@ import 'providers/view_product_controller.dart';
 import 'providers/notifications/notification_controller.dart';
 import 'providers/profile_page/document_controller.dart';
 import 'providers/profile_page/store_time_controller.dart';
+import 'providers/admin/admin_provider.dart';
 
 /// Theme
 import 'config/app_theme.dart';
@@ -53,6 +55,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProductController()),
         ChangeNotifierProvider(create: (_) => DocumentController()),
         ChangeNotifierProvider(create: (_) => StoreTimeController()),
+        ChangeNotifierProvider(create: (_) => AdminProvider()),
       ],
       child: const AppWithTheme(),
     );
@@ -104,7 +107,7 @@ class AppWithTheme extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: themeProvider.isDark ? ThemeMode.dark : ThemeMode.light,
-      initialRoute: '/home',
+      initialRoute: '/admin', // Changed to '/admin' for testing - change back to '/home' when done
 
       onGenerateRoute: (settings) {
         switch (settings.name) {
@@ -126,6 +129,9 @@ class AppWithTheme extends StatelessWidget {
             return MaterialPageRoute(
               builder: (_) => ProductDetailsScreen(product: product),
             );
+
+          case '/admin':
+            return _slideRoute(settings, const AdminDashboardScreen());
 
           case '/home':
           default:

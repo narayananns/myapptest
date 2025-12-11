@@ -142,7 +142,8 @@ class PartnerProfilePage extends StatelessWidget {
                     crossAxisCount: 2,
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
-                    childAspectRatio: 1.4,
+                    childAspectRatio:
+                        1.2, // Increased height for better visibility
                   ),
                   children: [
                     MenuCard(

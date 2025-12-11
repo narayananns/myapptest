@@ -16,6 +16,7 @@ class OrderItemCard extends StatelessWidget {
     const Color shadowColor = Color.fromRGBO(80, 80, 80, 0.21);
 
     return Container(
+      padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
         color: cardBgColor,
         borderRadius: BorderRadius.circular(10),
@@ -37,7 +38,7 @@ class OrderItemCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(6),
                 child: Image.asset(item.image, fit: BoxFit.cover),
               ),
             ),
@@ -59,29 +60,38 @@ class OrderItemCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     color: nameColor,
-                    fontSize: 12,
+                    fontSize: 10, // Reduced from 12
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 2), // Reduced spacing
                 Text(
                   "Size: ${item.size}",
-                  style: const TextStyle(color: detailsColor, fontSize: 10),
+                  style: const TextStyle(
+                    color: detailsColor,
+                    fontSize: 9,
+                  ), // Reduced from 10
                 ),
                 Text(
                   "Qty: ${item.qty}",
-                  style: const TextStyle(color: detailsColor, fontSize: 10),
+                  style: const TextStyle(
+                    color: detailsColor,
+                    fontSize: 9,
+                  ), // Reduced from 10
                 ),
                 Text(
                   "Color: ${item.color}",
-                  style: const TextStyle(color: detailsColor, fontSize: 10),
+                  style: const TextStyle(
+                    color: detailsColor,
+                    fontSize: 9,
+                  ), // Reduced from 10
                 ),
                 const SizedBox(height: 2),
                 Text(
                   "Price: ₹${item.price.toInt()}",
                   style: const TextStyle(
                     color: detailsColor,
-                    fontSize: 11,
+                    fontSize: 8.5, // Reduced from 11
                     fontWeight: FontWeight.w600,
                   ),
                 ),

@@ -126,52 +126,67 @@ class PaymentTable extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           // Pagination Row
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+          Wrap(
+            alignment: WrapAlignment.end,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 10,
+            runSpacing: 10,
             children: [
-              const Text("Rows per page:", style: TextStyle(fontSize: 12)),
-              const SizedBox(width: 10),
-              DropdownButton<int>(
-                value: controller.rowsPerPage,
-                underline: const SizedBox(),
-                items: [5, 10, 25].map((int value) {
-                  return DropdownMenuItem<int>(
-                    value: value,
-                    child: Text("$value", style: const TextStyle(fontSize: 12)),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  if (value != null) {
-                    controller.updateRowsPerPage(value);
-                  }
-                },
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text("Rows per page:", style: TextStyle(fontSize: 12)),
+                  const SizedBox(width: 10),
+                  DropdownButton<int>(
+                    value: controller.rowsPerPage,
+                    underline: const SizedBox(),
+                    items: [5, 10, 25].map((int value) {
+                      return DropdownMenuItem<int>(
+                        value: value,
+                        child: Text(
+                          "$value",
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        controller.updateRowsPerPage(value);
+                      }
+                    },
+                  ),
+                ],
               ),
-              const SizedBox(width: 20),
-              Text(
-                "${(controller.currentPage - 1) * controller.rowsPerPage + 1}-${(controller.currentPage * controller.rowsPerPage) > controller.total ? controller.total : (controller.currentPage * controller.rowsPerPage)} of ${controller.total}",
-                style: const TextStyle(fontSize: 12),
-              ),
-              const SizedBox(width: 20),
-              IconButton(
-                onPressed: controller.currentPage > 1
-                    ? controller.previousPage
-                    : null,
-                icon: const Icon(Icons.chevron_left),
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
-                iconSize: 24,
-              ),
-              const SizedBox(width: 10),
-              IconButton(
-                onPressed:
-                    (controller.currentPage * controller.rowsPerPage) <
-                        controller.total
-                    ? controller.nextPage
-                    : null,
-                icon: const Icon(Icons.chevron_right),
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
-                iconSize: 24,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "${(controller.currentPage - 1) * controller.rowsPerPage + 1}-${(controller.currentPage * controller.rowsPerPage) > controller.total ? controller.total : (controller.currentPage * controller.rowsPerPage)} of ${controller.total}",
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    onPressed: controller.currentPage > 1
+                        ? controller.previousPage
+                        : null,
+                    icon: const Icon(Icons.chevron_left),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    iconSize: 24,
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    onPressed:
+                        (controller.currentPage * controller.rowsPerPage) <
+                            controller.total
+                        ? controller.nextPage
+                        : null,
+                    icon: const Icon(Icons.chevron_right),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    iconSize: 24,
+                  ),
+                ],
               ),
             ],
           ),

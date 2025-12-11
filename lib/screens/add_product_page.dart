@@ -39,6 +39,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
   @override
   void initState() {
     super.initState();
+    // Clear any previous data when entering Add Product screen
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AddProductController>(context, listen: false).clearData();
+    });
   }
 
   bool _validate(AddProductController ctrl) {

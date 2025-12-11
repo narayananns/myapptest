@@ -33,6 +33,34 @@ class AddProductController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearData() {
+    nameCtrl.clear();
+    idCtrl.clear();
+    productPhotos.clear();
+    sellingPriceCtrl.clear();
+    priceBeforeCtrl.clear();
+    descriptionCtrl.clear();
+    stockList.clear();
+    colors.clear();
+    quantityCtrl.clear();
+    stockItemCtrl.clear();
+    stockSizeCtrl.clear();
+    colorCtrl.clear();
+    productCareCtrl.clear();
+    productReviewCtrl.clear();
+
+    gender = "Men";
+    category = null;
+    subCategory = null;
+    isVisible = true;
+    sizeGuideImage = null;
+    isTopSelling = false;
+    isReturnable = true;
+    selectedRelatedProduct = null;
+
+    notifyListeners();
+  }
+
   Future<void> pickImages() async {
     try {
       final List<XFile> images = await _picker.pickMultiImage();

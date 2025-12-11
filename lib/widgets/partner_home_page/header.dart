@@ -59,6 +59,8 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                   children: [
                     Text(
                       storeName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

@@ -130,8 +130,8 @@ class _DocumentDetailScreenState extends State<DocumentDetailScreen> {
                       Container(
                         margin: const EdgeInsets.only(bottom: 10),
                         width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton.icon(
+                        height: 100,
+                        child: ElevatedButton(
                           onPressed: _pickFile,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Theme.of(context).primaryColor,
@@ -139,17 +139,24 @@ class _DocumentDetailScreenState extends State<DocumentDetailScreen> {
                               borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                          icon: const Icon(
-                            Icons.cloud_upload,
-                            color: Colors.white,
-                          ),
-                          label: const Text(
-                            "Upload",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(
+                                Icons.cloud_upload,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                              SizedBox(height: 5),
+                              Text(
+                                "Upload",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

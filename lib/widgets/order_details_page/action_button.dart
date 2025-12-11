@@ -118,21 +118,23 @@ class ActionButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         /// CONFIRM
-        ElevatedButton.icon(
-          onPressed: () {
-            if (deliveryType == null) {
-              _showDeliveryWarning(context); // Block confirm
-              return;
-            }
-            _showActionPopup(context, "confirm");
-          },
-          icon: const Icon(Icons.check, color: Colors.white),
-          label: const Text("Confirm", style: TextStyle(color: Colors.white)),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.confirmGreen,
-            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
+        Expanded(
+          child: ElevatedButton.icon(
+            onPressed: () {
+              if (deliveryType == null) {
+                _showDeliveryWarning(context); // Block confirm
+                return;
+              }
+              _showActionPopup(context, "confirm");
+            },
+            icon: const Icon(Icons.check, color: Colors.white),
+            label: const Text("Confirm", style: TextStyle(color: Colors.white)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.confirmGreen,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
             ),
           ),
         ),
@@ -140,15 +142,17 @@ class ActionButtons extends StatelessWidget {
         const SizedBox(width: 18),
 
         /// DECLINE
-        ElevatedButton.icon(
-          onPressed: () => _showActionPopup(context, "decline"),
-          icon: const Icon(Icons.close, color: Colors.white),
-          label: const Text("Decline", style: TextStyle(color: Colors.white)),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.declineRed,
-            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
+        Expanded(
+          child: ElevatedButton.icon(
+            onPressed: () => _showActionPopup(context, "decline"),
+            icon: const Icon(Icons.close, color: Colors.white),
+            label: const Text("Decline", style: TextStyle(color: Colors.white)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.declineRed,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
             ),
           ),
         ),

@@ -11,9 +11,9 @@ class FolderCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color:const Color.fromRGBO(31, 31, 31, 1),
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5)],
+        boxShadow: [BoxShadow(color: Colors.grey.shade100, blurRadius: 1)],
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -32,7 +32,7 @@ class FolderCard extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: Colors.white,
               ),
               maxLines: 4,
               overflow: TextOverflow.ellipsis,

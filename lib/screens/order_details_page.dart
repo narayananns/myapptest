@@ -206,20 +206,31 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                       /// ORDER ITEMS LIST
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 18),
-                        child: GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          itemCount: data.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 12,
-                                mainAxisSpacing: 12,
-                                childAspectRatio: 173 / 110,
-                              ),
-                          itemBuilder: (context, index) {
-                            return OrderItemCard(item: data[index]);
+                        child: LayoutBuilder(
+                          builder: (context, constraints) {
+                            // Calculate aspect ratio dynamically to ensure fixed height for cards
+                            final double itemWidth =
+                                (constraints.maxWidth - 12) / 2;
+                            const double fixedHeight =
+                                135; // Sufficient height for content
+                            final double ratio = itemWidth / fixedHeight;
+
+                            return GridView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.zero,
+                              itemCount: data.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 12,
+                                    mainAxisSpacing: 12,
+                                    childAspectRatio: ratio,
+                                  ),
+                              itemBuilder: (context, index) {
+                                return OrderItemCard(item: data[index]);
+                              },
+                            );
                           },
                         ),
                       ),

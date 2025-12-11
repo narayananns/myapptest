@@ -58,7 +58,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 );
               },
               options: CarouselOptions(
-                height: 350,
+                aspectRatio: 1,
                 enlargeCenterPage: false,
                 viewportFraction: 1,
                 onPageChanged: (index, _) {
